@@ -1,5 +1,3 @@
 # Strength4You
 
-This is our readme
-
-so far...
+CS 546 - Final Project
