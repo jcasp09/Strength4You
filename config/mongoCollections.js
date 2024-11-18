@@ -13,3 +13,4 @@ const getCollectionFn = (collection) => {
   };
 };
 
+// Establish databases below
