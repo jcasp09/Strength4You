@@ -1,0 +1,22 @@
+{
+  "name": "strength4you",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "Strength4You"
+  },
+  "description": "CS 546 - Final Project",
+  "author": "Jason C, Vincent C, Caleb R, James T, Kevin P",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.1",
+    "express-handlebars": "^8.0.1",
+    "handlebars": "^4.7.8",
+    "mongodb": "^6.11.0"
+  }
+}
