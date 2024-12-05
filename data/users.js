@@ -1,21 +1,20 @@
 import { ObjectId } from 'mongodb'; // object id validation
 import bcrypt from 'bcrypt'; // for hashing passwords
 import { users } from '../config/mongoCollections.js'; // user collection from database
+import validation from '../validation.js'
 
 const saltRounds = 10; // salt rounds for hashing passwords
 
 const exportedMethods = {
   // create new user
   async createUser(firstName, lastName, username, email, password, dob) {
-    if (!firstName || typeof firstName !== 'string' || !firstName.trim()) throw 'invalid first name'; // validate first name
-    if (!lastName || typeof lastName !== 'string' || !lastName.trim()) throw 'invalid last name'; // validate last name
-    if (!username || typeof username !== 'string' || !username.trim()) throw 'invalid username'; // validate username
-    if (!email || typeof email !== 'string' || !email.trim()) throw 'invalid email'; // validate email
-    if (!password || typeof password !== 'string' || password.length < 8) throw 'password must be at least 8 characters long'; // minimum length
-    if (!/[0-9]/.test(password)) throw 'password must contain at least one number'; // check for number
-    if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) throw 'password must contain at least one special character'; // check for special character
-    if (/^[0-9!@#$%^&*(),.?":{}|<>]+$/.test(password)) throw 'password cannot be all numbers or special characters'; // avoid all numbers/special characters
-    if (!dob || isNaN(Date.parse(dob))) throw 'invalid date of birth'; // validate date of birth
+    //validate
+    firstName = validation.checkString(firstName);
+    lastName = validation.checkString(lastName);
+    username = username.checkString(lastName).toLowerCase();
+    email = validation.checkString(email).toLowerCase();
+    password = validation.checkPassword(password);
+    validation.checkDOB(dob)
     const userCollection = await users(); // get user collection
     const existingUsername = await userCollection.findOne({ username: username.trim().toLowerCase() });// check for duplicate username
     if (existingUsername) throw 'username already exists'; 
@@ -25,13 +24,13 @@ const exportedMethods = {
 
     // create user object
     const newUser = {
-      firstName: firstName.trim(),
-      lastName: lastName.trim(),
-      username: username.trim().toLowerCase(),
-      email: email.trim().toLowerCase(),
+      firstName,
+      lastName,
+      username,
+      email,
       hashedPassword, 
       dob: new Date(dob), //store as date object
-      profilePicture: null, // placeholder 
+      profilePicture: "no_image.jpeg", // placeholder 
     };
 
     // insert user into the database
@@ -43,10 +42,10 @@ const exportedMethods = {
 
   // get a user by id
   async getUserById(userId) {
-    if (!userId || typeof userId !== 'string' || !ObjectId.isValid(userId.trim())) throw 'invalid user id'; // validate user id
+    userId = validation.checkId(userId, "userId")
 
     const userCollection = await users(); // get user collection
-    const user = await userCollection.findOne({ _id: new ObjectId(userId.trim()) }); // find user by id
+    const user = await userCollection.findOne({ _id: new ObjectId(userId) }); // find user by id
     if (!user) throw 'user not found'; // ensure user exists
 
     user._id = user._id.toString(); // convert id to string for consistency
@@ -61,12 +60,8 @@ const exportedMethods = {
     const updateFields = {}; // object to store fields to update
 
     // validate and add fields to update object
-    if (updatedData.firstName && typeof updatedData.firstName === 'string' && updatedData.firstName.trim()) {
-      updateFields.firstName = updatedData.firstName.trim(); 
-    }
-    if (updatedData.lastName && typeof updatedData.lastName === 'string' && updatedData.lastName.trim()) {
-      updateFields.lastName = updatedData.lastName.trim(); 
-    }
+    if (updatedData.firstName) updateFields.firstName = validation.checkString(firstName);
+    if (updatedData.lastName) updateFields.lastName = validation.checkString(lastName);
     if (updatedData.city && typeof updatedData.city === 'string' && updatedData.city.trim()) {
       updateFields.city = updatedData.city.trim(); 
     }
