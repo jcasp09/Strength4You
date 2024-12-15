@@ -1,6 +1,6 @@
 import { ObjectId } from 'mongodb'; // for object id validation
 import { reviews } from '../config/mongoCollections.js'; // reviews collection
-import gymsData from './gyms.js'; // to validate gym ids
+import * as gymsData from './gyms.js'; // to validate gym ids
 import usersData from './users.js'; // to validate user ids
 
 const exportedMethods = {

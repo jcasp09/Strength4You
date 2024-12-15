@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import gymData from '../data/gyms.js';
+import * as gymData from '../data/gyms.js';
 
 const router = Router();
 

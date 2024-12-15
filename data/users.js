@@ -1,5 +1,5 @@
 import { ObjectId } from 'mongodb'; // object id validation
-import bcrypt from 'bcrypt'; // for hashing passwords
+import bcrypt from 'bcryptjs'; // for hashing passwords
 import { users } from '../config/mongoCollections.js'; // user collection from database
 
 const exportedMethods = {
