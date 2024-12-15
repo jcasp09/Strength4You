@@ -1,7 +1,7 @@
 // Middleware: called in app.js before configuring routes
 
 
-// Redirects to signin or respective authorized pages
+// MW1: Redirects to signin or respective authorized pages
 export const rootRedirect = async (req, res, next) => {
   if (req.path === '/') {
       // User is not authenticated, send to home screen
@@ -16,8 +16,7 @@ export const rootRedirect = async (req, res, next) => {
   next()
 }
 
-
-// Redirects all users and gyms so they cannot reaccess the signin page
+// MW2: Redirects all users and gyms so they cannot reaccess the signin page
 export const signInRedirect = async (req, res, next) => {
   // User is already signed in (has an active session)
   if (req.session.user) {
@@ -27,8 +26,7 @@ export const signInRedirect = async (req, res, next) => {
   next()
 }
 
-
-// Redirects all users (from both '/users/signup' and '/gyms/signup') so they cannot reaccess the signup page
+// MW3: Redirects all users (from both '/users/signup' and '/gyms/signup') so they cannot reaccess the signup page
 export const signUpRedirect = async (req, res, next) => {
   // User is authenticated
   if (req.session.user) {
@@ -38,9 +36,7 @@ export const signUpRedirect = async (req, res, next) => {
   next()
 }
 
-
-
-// Redirects users to sign in if they are not, or falls through to end session
+// MW4: Redirects users to sign in if they are not, or falls through to end session
 export const signOut = async (req, res, next) => {
   // User is not logged in
   if (!req.session.user) {
