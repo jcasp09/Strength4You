@@ -2,6 +2,9 @@ import express from 'express';
 const app = express();
 import exphbs from 'express-handlebars';
 import configRoutes from './routes/index.js';
+import session from 'express-session'
+import mw from './middleware.js'
+
 
 const rewriteUnsupportedBrowserMethods = (req, res, next) => {
     // If the user posts to the server with a property called _method, rewrite the request's method
@@ -21,7 +24,16 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(rewriteUnsupportedBrowserMethods);
 
-// Call potential middleware, or create sessions here (import what is needed)
+// Create session
+app.use(session({
+    name: 'AuthenticationState',
+    secret: 'some secret string!',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {maxAge: 300000}
+}))
+
+// Call middleware (ex: app.use('/signinuser', mw.signInRedirect) )
 
 
 app.engine('handlebars', exphbs.engine({defaultLayout: 'main'}));
