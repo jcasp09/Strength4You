@@ -1,38 +1,51 @@
-const middleware = {
-    // Logs every request to the server
-    requestLogger: (req, res, next) => {
-      console.log(`${new Date().toISOString()} - ${req.method} ${req.originalUrl}`);
-      next();
-    },
-  
-    // Middleware to check if a user is logged in
-    isAuthenticated: (req, res, next) => {
+// Middleware: called in app.js before configuring routes
+
+
+// Redirects to signin or respective authorized pages
+export const rootRedirect = async (req, res, next) => {
+  if (req.path === '/') {
+      // User is not authenticated, send to home screen
       if (!req.session.user) {
-        return res.status(403).render('error', {
-          title: 'Access Denied',
-          errorMessage: 'You must be signed in to access this page.',
-        });
+          return res.redirect('/home')
       }
-      next();
-    },
-  
-    // 404 Not Found Handler
-    notFoundHandler: (req, res) => {
-      res.status(404).render('error', {
-        title: '404 Not Found',
-        errorMessage: 'The page you are looking for does not exist.',
-      });
-    },
-  
-    // Centralized Error Handler
-    errorHandler: (err, req, res, next) => {
-      console.error(err.stack);
-      res.status(500).render('error', {
-        title: 'Server Error',
-        errorMessage: 'An unexpected error occurred on the server.',
-      });
-    },
-  };
-  
-  export default middleware;
-  
+      // User is signed in, send to search page
+      else {
+        return res.redirect('/home/search')
+      }
+  }
+  next()
+}
+
+
+// Redirects all users and gyms so they cannot reaccess the signin page
+export const signInRedirect = async (req, res, next) => {
+  // User is already signed in (has an active session)
+  if (req.session.user) {
+      return res.redirect('/home/search')
+  }
+  // User is not signed in, let through to signin page
+  next()
+}
+
+
+// Redirects all users (from both '/users/signup' and '/gyms/signup') so they cannot reaccess the signup page
+export const signUpRedirect = async (req, res, next) => {
+  // User is authenticated
+  if (req.session.user) {
+    return res.redirect('/home/search')
+  }
+  // User is not signed in, let through to signup page
+  next()
+}
+
+
+
+// Redirects users to sign in if they are not, or falls through to end session
+export const signOut = async (req, res, next) => {
+  // User is not logged in
+  if (!req.session.user) {
+      return res.redirect('/signin')
+  }
+  // User is signed in, let through to signout page
+  next()
+}

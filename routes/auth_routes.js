@@ -6,40 +6,37 @@ import * as validate from '../validation.js'
 
 
 router.route('/').get(async (req, res) => {
-  //code here for GET, THIS ROUTE SHOULD NEVER FIRE BECAUSE OF MIDDLEWARE #1 IN SPECS.
-  return res.json({error: 'YOU SHOULD NOT BE HERE!'});
+  // rootRedirect middleware restricts access to this route 
+  return res.json({error: 'YOU SHOULD NOT BE HERE!'})
 });
 
-router
-  .route('/signupuser')
-  .get(async (req, res) => {
-    // Render Sign Up handlebar
-    return res.render('signupuser')
-  })
-  .post(async (req, res) => {
+router.route('/home').get(async (req, res) => {
+  return res.render('home')
+});
 
-  });
+router.route('/home/search').get(async (req, res) => {
+  return res.render('search')
+});
+
+
 
 router
-  .route('/signinuser')
+  .route('/signin')
   .get(async (req, res) => {
     // Render Sign In handlebar
-    return res.render('signinuser')
+    return res.render('signin')
   })
   .post(async (req, res) => {
+    // Submit signin request
     
   });
 
-router.route('/user').get(async (req, res) => {
-
-});
-
-router.route('/administrator').get(async (req, res) => {
-
-});
+r
 
 router.route('/signoutuser').get(async (req, res) => {
-    
+  // Render Sign out handlebar after destroying user's session
+  req.session.destroy()
+  return res.render('signout')
 });
 
 export default router

@@ -3,7 +3,7 @@ const app = express();
 import exphbs from 'express-handlebars';
 import configRoutes from './routes/index.js';
 import session from 'express-session'
-import mw from './middleware.js'
+import * as mw from './middleware.js'
 
 
 const rewriteUnsupportedBrowserMethods = (req, res, next) => {
@@ -34,7 +34,11 @@ app.use(session({
 }))
 
 // Call middleware (ex: app.use('/signinuser', mw.signInRedirect) )
-
+app.use(mw.rootRedirect)
+app.use('/signin', mw.signInRedirect)
+app.use('/users/signup', mw.signUpRedirect)
+app.use('/gyms/signup', mw.signUpRedirect)
+app.use('/signout', mw.signOut)
 
 app.engine('handlebars', exphbs.engine({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
