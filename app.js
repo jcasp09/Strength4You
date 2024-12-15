@@ -1,38 +1,36 @@
 import express from 'express';
-import exphbs from 'express-handlebars';
-import path from 'path';
-
 const app = express();
-const __dirname = path.resolve();
+import exphbs from 'express-handlebars';
+import configRoutes from './routes/index.js';
 
-// Handlebars setup
-app.engine('handlebars', exphbs.engine({
-    defaultLayout: 'main',
-    layoutsDir: path.join(__dirname, 'views/layouts')
-}));
-app.set('view engine', 'handlebars');
-app.set('views', path.join(__dirname, 'views'));
+const rewriteUnsupportedBrowserMethods = (req, res, next) => {
+    // If the user posts to the server with a property called _method, rewrite the request's method
+    // To be that method; so if they post _method=PUT you can now allow browsers to POST to a route that gets
+    // rewritten in this middleware to a PUT route
+    if (req.body && req.body._method) {
+      req.method = req.body._method;
+      delete req.body._method;
+    }
+  
+    // let the next middleware run:
+    next();
+};
 
-// Static files setup
 app.use('/public', express.static(path.join(__dirname, 'public')));
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
+app.use(rewriteUnsupportedBrowserMethods);
 
-// Home route
-app.get('/', (req, res) => {
-    console.log("Home route hit");
-    res.render('home', { title: 'Welcome to Strength4You' });
-});
+// Call potential middleware, or create sessions here (import what is needed)
 
-// 404 error route
-app.use('*', (req, res) => {
-    console.log(`404 handler triggered for URL: ${req.originalUrl}`);
-    res.status(404).render('error', {
-        title: '404 Not Found',
-        errorMessage: 'The page you are looking for does not exist.'
-    });
-});
 
-// Start server
-const PORT = 3000;
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+app.engine('handlebars', exphbs.engine({defaultLayout: 'main'}));
+app.set('view engine', 'handlebars');
+
+configRoutes(app);
+
+
+app.listen(3000, () => {
+  console.log("We've now got a server!");
+  console.log('Your routes will be running on http://localhost:3000');
 });
