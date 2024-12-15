@@ -13,7 +13,7 @@ const getCollectionFn = (collection) => {
   };
 };
 
-// Databases
+// Collections in Strength4You db
 export const users = getCollectionFn('users');
 export const gyms = getCollectionFn('gyms');
 export const reviews = getCollectionFn('reviews');
