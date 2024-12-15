@@ -1,8 +1,6 @@
 import authRoutes from './auth_routes.js'
 import userRoutes from './users.js'
 import gymRoutes from './gyms.js'
-import reviewRoutes from './reviews.js'
-import commentRoutes from './comments.js'
 import {static as staticDir} from 'express'; // serve static files
 
 const constructorMethod = (app) => {
