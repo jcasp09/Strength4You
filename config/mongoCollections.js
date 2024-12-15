@@ -12,5 +12,9 @@ const getCollectionFn = (collection) => {
     return _col;
   };
 };
-export const users = getCollectionFn('users'); // Export named users collection
-// Establish databases below
+
+// Databases
+export const users = getCollectionFn('users');
+export const gyms = getCollectionFn('gyms');
+export const reviews = getCollectionFn('reviews');
+export const comments = getCollectionFn('comments');
