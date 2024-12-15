@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import reviewsData from '../data/reviews.js';
+import reviewData from '../data/reviews.js';
 
 const router = Router(); // initialize
 
@@ -10,7 +10,7 @@ router.post('/', async (req, res) => {
   try {
     if (!aboutId || !userId || !reviewBody || rating === undefined) throw 'Missing required fields'; // check required fields
 
-    const newReview = await reviewsData.createReview(aboutId, userId, reviewBody, rating); // create review
+    const newReview = await reviewData.createReview(aboutId, userId, reviewBody, rating); // create review
 
     res.status(201).json(newReview); // respond with created review
   } catch (error) {
@@ -25,7 +25,7 @@ router.get('/:id', async (req, res) => {
   try {
     if (!id) throw 'Missing review ID'; // check if id exists
 
-    const review = await reviewsData.getReviewById(id); // get review by id
+    const review = await reviewData.getReviewById(id); // get review by id
 
     res.status(200).json(review); // respond with review data
   } catch (error) {
@@ -40,7 +40,7 @@ router.delete('/:id', async (req, res) => {
   try {
     if (!id) throw 'Missing review ID'; // check if id exists
 
-    const result = await reviewsData.deleteReview(id); // delete review by id
+    const result = await reviewData.deleteReview(id); // delete review by id
 
     res.status(200).json(result); // respond with success message
   } catch (error) {
