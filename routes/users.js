@@ -7,8 +7,9 @@ import userData from '../data/users.js';
 
 const router = Router(); // Initialize router
 
-// Create a new user
-router.post('/', async (req, res) => {
+// Create a new user profile
+router.post('/signup', async (req, res) => {
+  // Render signin page
   const { firstName, lastName, username, email, password, dob } = req.body;
 
   try {
@@ -28,6 +29,7 @@ router.post('/', async (req, res) => {
 
 // Get a user by ID
 router.get('/:id', async (req, res) => {
+  // Render user profile page
   const { id } = req.params;
 
   try {
@@ -43,6 +45,7 @@ router.get('/:id', async (req, res) => {
 
 // Update a user by ID
 router.patch('/:id', async (req, res) => {
+  // User role must be user or admin, users can only update their own profile
   const { id } = req.params;
   const updatedData = req.body;
 
@@ -59,6 +62,7 @@ router.patch('/:id', async (req, res) => {
 
 // Delete a user by ID
 router.delete('/:id', async (req, res) => {
+  // User role must be user or admin, users can only delete their own profile
   const { id } = req.params;
 
   try {
@@ -72,32 +76,5 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
-// Render the sign-in page
-router.get('/signin', (req, res) => {
-  res.render('signin', { title: 'Sign In' });
-});
-
-// Handle sign-in form submission
-router.post('/signin', async (req, res) => {
-  const { username, password } = req.body;
-
-  try {
-    const user = await userData.authenticate(username, password);
-
-    if (!user) throw new Error('Invalid username or password');
-
-    req.session.user = {
-      id: user._id,
-      username: user.username,
-    };
-
-    res.redirect('/'); // Redirect to the home page on successful sign-in
-  } catch (error) {
-    res.status(400).render('signin', {
-      title: 'Sign In',
-      errorMessage: error.message,
-    });
-  }
-});
 
 export default router;
