@@ -46,7 +46,14 @@ const exportedMethods = {
         return password;
     },
 
-    checkDOB(dob) { if (!dob || isNaN(Date.parse(dob))) throw 'invalid date of birth' }
+    checkDOB(dob) { if (!dob || isNaN(Date.parse(dob))) throw 'invalid date of birth' },
+
+    checkCommentBody(body) {
+        body = this.checkString(body)
+        if (body.length > 500)
+            throw `Comment must be less than 500 characters long`
+        return body;
+    } 
 };
 
 export default exportedMethods;
