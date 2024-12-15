@@ -11,7 +11,7 @@
     "url": "Strength4You"
   },
   "description": "CS 546 - Final Project",
-  "author": "Jason C, Vincent C, Caleb R, James T, Kevin P",
+  "author": "Jason C, Vincent C, Caleb R, James T",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
