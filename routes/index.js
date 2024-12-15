@@ -8,6 +8,7 @@ const constructorMethod = (app) => {
     app.use('/', authRoutes);
     app.use('/users', userRoutes);
     app.use('/gyms', gymRoutes);
+    app.use('/about', (req, res) => {res.render('aboutus')})
     app.use('*', (req, res) => {
         res.redirect('/');
     });
