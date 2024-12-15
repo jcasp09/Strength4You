@@ -1,24 +1,24 @@
 <!-- Sign up gym page (role = gym) -->
 
-<h1>Sign Up</h1>
-<form action="/users/signup" method="POST">
-    <label for="firstName">First Name:</label>
-    <input type="text" id="firstName" name="firstName" placeholder="Enter your first name" required>
+<h1>Sign Up - Gym</h1>
+<form action="/gyms/signup" method="POST">
+    <label for="name">Gym name:</label>
+    <input type="text" id="name" name="name" placeholder="Enter the name of your gym">
 
-    <label for="lastName">Last Name:</label>
-    <input type="text" id="lastName" name="lastName" placeholder="Enter your last name" required>
-
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="username" placeholder="Enter a username" required>
-
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+    <label for="userId">userId:</label>
+    <input type="text" id="userId" name="userId" placeholder="Enter your userId">
 
     <label for="password">Password:</label>
-    <input type="password" id="password" name="password" placeholder="Enter a password" required>
+    <input type="password" id="password" name="password" placeholder="Enter a password">
 
-    <label for="dob">Date of Birth:</label>
-    <input type="date" id="dob" name="dob" required>
+    <label for="address">Address:</label>
+    <input type="text" id="address" name="address" placeholder="Enter your gym's address">
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" placeholder="Enter your gym's email">
+
+    <!-- etc. below (see database proposal for other required info -->
+
 
     <button type="submit">Sign Up</button>
 </form>
