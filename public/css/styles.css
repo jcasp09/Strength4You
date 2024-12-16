@@ -1,5 +1,15 @@
 /* Styling Rules */
 
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Ensure body and html take up full height */
+html, body {
+    height: 100%;
+}
 
 /* General styling */
 body {
@@ -81,4 +91,22 @@ a:hover {
 
 .error {
     color: red;
+}
+
+.background {
+    /* Set the background image */
+    background: url('../images/gymBackground.jpg');
+
+    /* Ensure the image covers the entire container */
+    background-size: cover;
+
+    /* Center the image */
+    background-position: center;
+
+    /* Prevent the image from repeating */
+    background-repeat: no-repeat;
+
+    /* Make sure the container fills the viewport */
+    height: 100vh;
+    width: 100%;
 }
