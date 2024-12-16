@@ -1,9 +1,9 @@
 // Middleware: called in app.js before configuring routes
 
 
-// MW1: Redirects to signin or respective authorized pages
+// Redirects to signin or respective authorized pages
 export const applyMiddleware = (app) => {
-  // Logging Middleware
+  // MW1: Logging Middleware
   app.use((req, res, next) => {
     const timestamp = new Date().toUTCString();
     const method = req.method;
@@ -13,7 +13,7 @@ export const applyMiddleware = (app) => {
     next();
   });
 
-  // MW1: Root Redirect Middleware
+  // MW2: Root Redirect Middleware
   app.use((req, res, next) => {
     if (req.path === '/') {
       if (!req.session.user) {
@@ -25,7 +25,7 @@ export const applyMiddleware = (app) => {
     next();
   });
 
-  // MW2: Sign-in Redirect
+  // MW3: Sign-in Redirect
   app.use('/users/signin', (req, res, next) => {
     if (req.session.user) {
       return res.redirect('/home/search'); // Already signed-in users to search
@@ -33,6 +33,7 @@ export const applyMiddleware = (app) => {
     next();
   });
 
+  // MW4: Sign-in Redirect
   app.use('/gyms/signin', (req, res, next) => {
     if (req.session.user) {
       return res.redirect('/home/search');
@@ -40,7 +41,7 @@ export const applyMiddleware = (app) => {
     next();
   });
 
-  // MW3: Sign-up Redirect
+  // MW5: Sign-up Redirect
   app.use(['/users/signup', '/gyms/signup'], (req, res, next) => {
     if (req.session.user) {
       return res.redirect('/home/search'); // Prevent access if already signed in
@@ -48,7 +49,7 @@ export const applyMiddleware = (app) => {
     next();
   });
 
-  // MW4: Sign Out Middleware
+  // MW6: Sign Out Middleware
   app.use('/signout', (req, res, next) => {
     if (!req.session.user) {
       return res.redirect('/home'); // Redirect to home if no session
