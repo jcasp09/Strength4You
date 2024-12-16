@@ -12,3 +12,4 @@ router.route('/gym').get(async (req, res) => {
     return res.status(200).render('gymprofile');
 });
   
+export default router
