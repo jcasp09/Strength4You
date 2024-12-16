@@ -150,3 +150,83 @@ a:hover {
     background-color: #f1f1f1;
     color: #333;
 }
+
+.profile {
+    background: url('../images/profileBackground.jpg');
+    background-repeat: repeat;       /* Repeat both horizontally and vertically */
+    background-size: auto;
+}
+
+
+/* Styling for the profile section */
+.profile {
+    background: url('../images/profileBackground.jpg');
+    background-repeat: repeat; /* Repeat both vertically and horizontally */
+    background-size: auto; /* Keep the original size of the background */
+    padding: 40px;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 1200px; /* Maximum width for large screens */
+    margin: 20px auto; /* Center the profile on the page */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow around the profile */
+    color: #333;
+}
+
+/* Profile Heading */
+.profile h1 {
+    font-size: 2.5rem;
+    color: #007BFF; /* Blue color for the heading */
+    margin-bottom: 20px;
+    text-align: left;
+    font-weight: bold;
+}
+
+/* Profile Info Section (Like Form or User Details) */
+.profile .info-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+
+/* Profile Form (If you have form elements like in user profile) */
+.profile form {
+    background-color: rgba(255, 255, 255, 0.9); /* Light background for form */
+    padding: 30px;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Add shadow for form */
+    margin: 0 auto; /* Center form horizontally */
+}
+
+/* Input Fields within Profile */
+.profile form input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    margin-bottom: 15px;
+}
+
+/* Button in Profile */
+.profile form button {
+    background-color: #007BFF;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    max-width: 200px;
+    margin-top: 10px;
+}
+
+/* Button Hover */
+.profile form button:hover {
+    background-color: #0056b3;
+}
