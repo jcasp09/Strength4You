@@ -12,7 +12,7 @@ router
   .route('/signup')
   .get(async (req, res) => {
     // Render signup page
-    res.render('signupuser')
+    return res.render('signupuser')
   })
   .post(async (req, res) => {
     // Render signin page
@@ -20,7 +20,7 @@ router
 
     // Invalid admin key: redirect to error page
     if (adminKey && adminKey !== key) {
-      res.status(400).render('error', {error: 'Incorrect Admin password... We keep a tight ship around here mister!'})
+      return res.status(400).render('error', {error: 'Incorrect Admin password... We keep a tight ship around here mister!'})
     }
     let role
     // adminKey is valid: admin
@@ -35,14 +35,14 @@ router
     try {
       const newUser = await userData.createUser(firstName, lastName, userId, password, email, dob, city, state, role);
       if (!newUser) {
-        res.status(500).render('error', {error: 'Could not add user'})
+        return res.status(500).render('error', {error: 'Could not add user'})
       }
       else {
-        res.status(200).render('signinuser')
+        return res.status(200).render('signinuser')
       }
 
     } catch (e) {
-      res.status(400).render('error', {error: e})
+      return res.status(400).render('error', {error: e})
     }
 });
 
@@ -51,7 +51,7 @@ router
   .route('/signin')
   .get(async (req, res) => {
     // Render signup page
-    res.render('signinuser')
+    return res.render('signinuser')
   })
   .post(async (req, res) => {
     // Validate req.body Sign In form fields: userId and password)
@@ -74,7 +74,7 @@ router
       return res.status(200).render('search')
 
     } catch (e) {
-      res.status(400).render('error', {error: e})
+      return res.status(400).render('error', {error: e})
     }
 });
 
@@ -91,9 +91,9 @@ router.get('/:id', async (req, res) => {
       throw new Error('Invalid ObjectId');
     }
     const user = await userData.getUserById(id);
-    res.status(200).json(user);
+    return res.status(200).json(user);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    return res.status(400).json({ error: error.message });
   }
 });
 
@@ -108,9 +108,9 @@ router.patch('/:id', async (req, res) => {
       throw new Error('Invalid ObjectId');
     }
     const updatedUser = await userData.updateUser(id, updatedData);
-    res.status(200).json(updatedUser);
+    return res.status(200).json(updatedUser);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    return res.status(400).json({ error: error.message });
   }
 });
 
@@ -124,9 +124,9 @@ router.delete('/:id', async (req, res) => {
       throw new Error('Invalid ObjectId');
     }
     const result = await userData.deleteUser(id);
-    res.status(200).json(result);
+    return res.status(200).json(result);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    return res.status(400).json({ error: error.message });
   }
 });
 

@@ -11,7 +11,7 @@ router
     .route('/signup')
     .get(async (req, res) => {
         // Render signup page
-        res.render('signupgym')
+        return res.render('signupgym')
     })
     .post(async (req, res) => {
         // Render signin page
@@ -25,13 +25,13 @@ router
         try {
             const newGym = await gymData.createGym(name, userId, password, email, address, hours, role);
             if (!newGym) {
-              res.status(500).render('error', {error: 'Could not add gym'})
+                return res.status(500).render('error', {error: 'Could not add gym'})
             }
             else {
-              res.status(200).render('signingym')
+                return res.status(200).render('signingym')
             }
         } catch (e) {
-            res.status(400).render('error', {error: e})
+            return res.status(400).render('error', {error: e})
         }
 });
 
@@ -40,7 +40,7 @@ router
   .route('/signin')
   .get(async (req, res) => {
     // Render signup page
-    res.render('signingym')
+    return res.render('signingym')
   })
   .post(async (req, res) => {
     // Validate req.body Sign In form fields: userId and password)
@@ -63,7 +63,7 @@ router
       return res.status(200).render('search')
 
     } catch (e) {
-      res.status(400).render('error', {error: e})
+        return res.status(400).render('error', {error: e})
     }
 });
 
