@@ -2,7 +2,7 @@
 
 // Validation funcitons needed: 
 function checkName(name, varName) {
-    name = this.checkString(name, varName)
+    name = checkString(name, varName)
     if (/\d/.test(name))
         throw `Error: ${varName} cannot contain digits`
     if (name.length < 2 || name.length > 25)
@@ -12,7 +12,7 @@ function checkName(name, varName) {
 }
 
 function checkUser(user) {
-    user = this.checkString(user, "User ID")
+    user = checkString(user, "User ID")
     if (/\d/.test(user))
         throw `Error: User ID cannot contain digits`
     if (user.length < 5 || user.length > 10)
@@ -22,7 +22,7 @@ function checkUser(user) {
 }
 
 function checkPassword(password) {
-    password = this.checkString(password, "Password");
+    password = checkString(password, "Password");
     if (/\s/.test(password))
         throw `Error: Password cannot contain spaces`
 
@@ -53,7 +53,7 @@ function checkString(strVal, varName) {
 }
 
 function checkEmail(email) {
-    email = this.checkString(email, "Email")
+    email = checkString(email, "Email")
     if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email))
         throw `Invalid email supplied`
     return email
@@ -62,6 +62,21 @@ function checkEmail(email) {
 function checkDOB(dob) {
     if (!dob || isNaN(Date.parse(dob))) throw 'invalid date of birth'
 }
+
+function checkDay(day) {
+    if (!day) return "Closed"
+    day = checkString(day, "Day");
+    if (!/^(0[1-9]|1[0-2])(am|pm)-0[1-9]|1[0-2](am|pm)$/.test(day) && day !== "Closed")
+        throw `Day's Hours is in invalid format`
+    if (day === "Closed")
+        return day
+    let start = parseInt(day.substring(0, 2)), period1 = day.substring(2, 2), end = parseInt(day.substring(5, 2)), period2 = day.substring(7, 2)
+    if (period1 == period2 && end <= start && day !== "12am-12am")
+        throw `Day's Hours are invalid`
+    return day;
+}
+
+
 
 // Event Handler: submission of User Signup form
 $('#userSignUpForm').submit(async (event) => {
@@ -136,6 +151,116 @@ $('#userSignUpForm').submit(async (event) => {
     } catch (e) {
         validForm = false
         $('#stateError').text(e).show()
+    }
+
+
+    // Input fields are valid, submit form
+    if (validForm) {
+        event.target.submit()
+    }
+})
+
+
+// Event Handler: submission of Gym Signup form
+$('#gymSignUpForm').submit(async (event) => {
+    event.preventDefault()
+    $('.error').hide()
+
+    let validForm = true
+
+    // Validate Gym Name
+    try {
+        checkString($('#name').val(), 'Gym Name')
+    } catch (e) {
+        validForm = false
+        $('#nameError').text(e).show()
+    }
+
+    // Validate User ID
+    try {
+        checkUser($('#userId').val(), 'User ID')
+    } catch (e) {
+        validForm = false
+        $('#userIdError').text(e).show()
+    }
+
+    // Validate Password and Confirm Password
+    try {
+        checkPassword($('#password').val(), 'Password');
+        if ($('#password').val() !== $('#confirmPassword').val()) {
+            throw new Error("Passwords do not match.");
+        }
+    } catch (e) {
+        validForm = false;
+        $('#passwordError').text(e).show();
+        $('#confirmPasswordError').text(e).show();
+    }
+
+    // Validate Email (optional?)
+    try {
+        checkEmail($('#email').val(), 'Email')
+    } catch (e) {
+        validForm = false
+        $('#emailError').text(e).show()
+    }
+
+    // Validate Address
+    try {
+        checkString($('#address').val(), 'Address')
+    } catch (e) {
+        validForm = false
+        $('#addressError').text(e).show()
+    }
+
+
+    // Validate Monday Hours
+    try {
+        checkDay($('#monday').val(), 'Monday')
+    } catch (e) {
+        validForm = false
+        $('#monError').text(e).show()
+    }
+    // Validate Monday Hours
+    try {
+        checkDay($('#tuesday').val(), 'Tuesday')
+    } catch (e) {
+        validForm = false
+        $('#tueError').text(e).show()
+    }
+    // Validate Wednesday Hours
+    try {
+        checkDay($('#wednesday').val(), 'Wednesday')
+    } catch (e) {
+        validForm = false
+        $('#wedError').text(e).show()
+    }
+    // Validate Thursday Hours
+    try {
+        checkDay($('#thursday').val(), 'Thursday')
+    } catch (e) {
+        validForm = false
+        $('#thuError').text(e).show()
+    }
+    // Validate Friday Hours
+    try {
+        checkDay($('#friday').val(), 'Friday')
+    } catch (e) {
+        validForm = false
+        $('#friError').text(e).show()
+    }
+    // Validate Saturday Hours
+    try {
+        checkDay($('#saturday').val(), 'Saturday')
+    } catch (e) {
+        validForm = false
+        $('#satError').text(e).show()
+    }
+    // Validate Sunday Hours
+    try {
+        checkDay($('#sunday').val(), 'Sunday')
+    } catch (e) {
+        validForm = false
+        $('#sunError').text(e).show()
     }
 
 
