@@ -13,7 +13,7 @@ const duplicateUserCheck = async (userId) => {
 }
 
 // create new user
-export const createUser = async (firstName, lastName, userId, password, email, dob, city, state) => {
+export const createUser = async (firstName, lastName, userId, password, email, dob, city, state, role) => {
   // Server-side validation
   firstName = validation.checkName(firstName)
   lastName = validation.checkName(lastName)
@@ -37,7 +37,8 @@ export const createUser = async (firstName, lastName, userId, password, email, d
     email,
     dob,
     city, 
-    state
+    state,
+    role
 }
 
   // Insert user object into database

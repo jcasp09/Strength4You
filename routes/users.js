@@ -20,14 +20,23 @@ router
     if (adminKey && adminKey !== key) {
       res.status(400).render('error', {error: 'Incorrect Admin password... We keep a tight ship around here mister!'})
     }
+    let role
+    // adminKey is valid: admin
+    if (adminKey === key) {
+      role = 'admin'
+    }
+    // no adminKey entered: user
+    else {
+      role = 'user'
+    }
 
     try {
-      const newUser = await userData.createUser(firstName, lastName, userId, password, email, dob, city, state);
+      const newUser = await userData.createUser(firstName, lastName, userId, password, email, dob, city, state, role);
       if (!newUser) {
         res.status(500).render('error', {error: 'Could not add user'})
       }
       else {
-        res.status(200).render('signin')
+        res.status(200).render('signinuser')
       }
 
     } catch (e) {
