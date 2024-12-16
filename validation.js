@@ -28,7 +28,7 @@ const exportedMethods = {
         if (password.length < 8)
             throw `Error: Password must be at least 8 characters long`
 
-        if (!/[!@#$%^&*(),.?":{}|<>]/.test(password))
+        if (!/[^a-zA-Z0-9]/.test(password))
             throw `Error: Password must contain at least one special character`
 
         if (!/\d/.test(password))

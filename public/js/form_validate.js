@@ -27,7 +27,7 @@ function checkPassword(password) {
     if (password.length < 8)
         throw `Error: Password must be at least 8 characters long`
 
-    if (!/[!@#$%^&*(),.?":{}|<>]/.test(password))
+    if (!/[^a-zA-Z0-9]/.test(password))
         throw `Error: Password must contain at least one special character`
 
     if (!/\d/.test(password))
@@ -289,3 +289,67 @@ $('#gymSignUpForm').submit(async (event) => {
         event.target.submit()
     }
 })
+
+
+// Event Handler: submission of User Signin form
+$('#signInUser').submit((event) => {
+    event.preventDefault()
+ 
+    let validForm = true
+ 
+    // Clear previous errors on submission
+    $('.error').hide()
+ 
+    // Validate User ID
+    try {
+       checkUser($('#userId').val(), 'User ID')
+    } catch (error) {
+       validForm = false
+       $('#userIdError').text(error).show()
+    }
+ 
+    // Validate Password
+    try {
+       checkPassword($('#password').val(), 'Password')
+    } catch (error) {
+       validForm = false
+       $('#passwordError').text(error).show()
+    }
+ 
+    // Input fields are valid, submit form
+    if (validForm) {
+       event.target.submit()
+    }
+ })
+
+
+ // Event Handler: submission of Gym Signin form
+$('#signInUser').submit((event) => {
+    event.preventDefault()
+ 
+    let validForm = true
+ 
+    // Clear previous errors on submission
+    $('.error').hide()
+ 
+    // Validate User ID
+    try {
+       checkUser($('#userId').val(), 'User ID')
+    } catch (error) {
+       validForm = false
+       $('#userIdError').text(error).show()
+    }
+ 
+    // Validate Password
+    try {
+       checkPassword($('#password').val(), 'Password')
+    } catch (error) {
+       validForm = false
+       $('#passwordError').text(error).show()
+    }
+ 
+    // Input fields are valid, submit form
+    if (validForm) {
+       event.target.submit()
+    }
+ })
