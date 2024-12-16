@@ -31,7 +31,7 @@ router
     
   });
 
-  
+
 
 router.route('/signoutuser').get(async (req, res) => {
   // Render Sign out handlebar after destroying user's session

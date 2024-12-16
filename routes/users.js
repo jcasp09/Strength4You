@@ -11,7 +11,7 @@ const router = Router(); // Initialize router
 
 // /users/signup functionality
 router
-  .route('signup')
+  .route('/signup')
   .get(async (req, res) => {
     // Render signup page
     res.render('signupuser')
