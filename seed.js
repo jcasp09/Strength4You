@@ -11,16 +11,16 @@ await db.dropDatabase() // clear collections
 const planetFitness = await gyms.createGym(
     'Planet Fitness', 'pFitness1', 'iLoveGym1!', 
     'location1@planetfintess.com', '605 Washington St, Hoboken, NJ.',
-    {'Mon': '8am-10pm', 'Tue': '8am-10pm', 'Wed': '8am-10pm', 
-     'Thu': '8am-10pm', 'Fri': '8am-10pm', 'Sat': '8am-2pm',
-     'Sun': '8am-2pm'},
+    {'Mon': '08am-10pm', 'Tue': '08am-10pm', 'Wed': '08am-10pm', 
+     'Thu': '08am-10pm', 'Fri': '08am-10pm', 'Sat': '08am-02pm',
+     'Sun': '08am-02pm'},
     'gym'
 )
 const crunchFitness = await gyms.createGym(
     'Crunch Fitness', 'cFitness1', 'workoutNow2!', 
     'location1@crunchfintess.com', '113 River St, Hoboken, NJ.',
-    {'Mon': '10am-8pm', 'Tue': '10am-8pm', 'Wed': '10am-8pm', 
-     'Thu': '10am-8pm', 'Fri': '10am-8pm', 'Sat': 'Closed',
+    {'Mon': '10am-08pm', 'Tue': '10am-08pm', 'Wed': '10am-08pm', 
+     'Thu': '10am-08pm', 'Fri': '10am-08pm', 'Sat': 'Closed',
      'Sun': 'Closed'},
     'gym'
 )
