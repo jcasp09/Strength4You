@@ -1,0 +1,47 @@
+<!-- Sign in page (serves Users only, userId and password are only required fields -->
+
+<title>User Profile</title>
+
+<main class="userProfile">
+    <h1>User Profile</h1>
+    <form action="/users/signin" method="POST" id="signInUser">
+        <label for="inputFields">Change profile</label>
+        <div class="inputFields">
+            <!-- User ID -->
+            <div> <label for="userId" class="label">User ID</label> </div>
+            <div> <input type="text" name="userId" id="userId"> </div>
+            <div class="error" id="userIdError" hidden></div>
+            <!-- Password -->
+            <div> <label for="oldPassword" class="label">Old Password</label> </div>
+            <div> <input type="password" name="oldPassword" id="oldPassword"> </div>
+            <div> <label for="password" class="label">New Password</label> </div>
+            <div> <input type="password" name="password" id="password"> </div>
+            <div class="error" id="passwordError" hidden></div>
+            <!-- userId -->
+            <div> <label for="userId" class="label">Username</label> </div>
+            <div> <input type="text" name="userId" id="userId"> </div>
+            <div class="error" id="userIdError" hidden></div>
+            <!-- email -->
+            <div> <label for="email" class="label">Email</label> </div>
+            <div> <input type="text" name="email" id="email"> </div>
+            <div class="error" id="emailError" hidden></div>
+            <!-- DOB -->
+            <div> <label for="dob" class="label">Date of Birth</label> </div>
+            <div> <input type="dob" name="dob" id="dob"> </div>
+            <div class="error" id="dobError" hidden></div>
+            <!-- City -->
+            <div> <label for="city" class="label">City</label> </div>
+            <div> <input type="text" name="city" id="city"> </div>
+            <div class="error" id="cityError" hidden></div>
+            <!-- State -->
+            <div> <label for="state" class="label">State</label> </div>
+            <div> <input type="text" name="state" id="state"> </div>
+            <div class="error" id="stateError" hidden></div>
+        </div>
+
+        <!-- Sign in button -->
+        <button type="submit">Sign In</button>
+    </form>
+
+    <!-- Include link here to redirect to home page-->
+</main>
