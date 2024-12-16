@@ -1,7 +1,50 @@
 <!-- Main search page (only accessible if signed in, UI may change depending on session role: admin/user/gym) -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Gyms</title>
+    <link rel="stylesheet" href="/public/css/styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/home">Home</a>
+            <a href="/signout">Sign Out</a>
+        </nav>
+    </header>
 
-<title> Gym Search </title>
+    <main>
+        <h1>Search for Gyms</h1>
 
-<main>
-    <p> Here you will see a list of gym profiles </p>
-</main>
+        <!-- Search Form -->
+        <form action="/gyms/search" method="GET">
+            <label for="searchTerm">Enter Gym Name, City, or Address:</label>
+            <input type="text" id="searchTerm" name="searchTerm" placeholder="e.g., Gold's Gym, Dallas" required>
+            <button type="submit">Search</button>
+        </form>
+
+        <!-- Display Search Results -->
+        {{#if gyms}}
+            <h2>Search Results</h2>
+            <ul>
+                {{#each gyms}}
+                    <li>
+                        <h3>{{this.name}}</h3>
+                        <p><strong>Address:</strong> {{this.address}}</p>
+                        <p><strong>Hours:</strong> {{this.hours}}</p>
+                        <p><strong>Rating:</strong> {{this.rating}} / 5</p>
+                    </li>
+                {{/each}}
+            </ul>
+        {{else}}
+            <p>No results found. Try refining your search.</p>
+        {{/if}}
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Strength4You</p>
+    </footer>
+</body>
+</html>
