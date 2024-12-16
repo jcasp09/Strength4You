@@ -2,46 +2,57 @@
 
 
 // MW1: Redirects to signin or respective authorized pages
-export const rootRedirect = async (req, res, next) => {
-  if (req.path === '/') {
-      // User is not authenticated, send to home screen
+export const applyMiddleware = (app) => {
+  // Logging Middleware
+  app.use((req, res, next) => {
+    const timestamp = new Date().toUTCString();
+    const method = req.method;
+    const route = req.originalUrl;
+    const authenticated = req.session.user ? 'Authenticated' : 'Non-Authenticated';
+    console.log(`[${timestamp}] ${method} ${route} (${authenticated})`);
+    next();
+  });
+
+  // MW1: Root Redirect Middleware
+  app.use((req, res, next) => {
+    if (req.path === '/') {
       if (!req.session.user) {
-          return res.redirect('/home')
+        return res.redirect('/home'); // Non-authenticated users to home
+      } else {
+        return res.redirect('/home/search'); // Authenticated users to search
       }
-      // User is signed in, send to search page
-      else {
-        return res.redirect('/home/search')
-      }
-  }
-  next()
-}
+    }
+    next();
+  });
 
-// MW2: Redirects all users and gyms so they cannot reaccess the signin page
-export const signInRedirect = async (req, res, next) => {
-  // User is already signed in (has an active session)
-  if (req.session.user) {
-      return res.redirect('/home/search')
-  }
-  // User is not signed in, let through to signin page
-  next()
-}
+  // MW2: Sign-in Redirect
+  app.use('/users/signin', (req, res, next) => {
+    if (req.session.user) {
+      return res.redirect('/home/search'); // Already signed-in users to search
+    }
+    next();
+  });
 
-// MW3: Redirects all users (from both '/users/signup' and '/gyms/signup') so they cannot reaccess the signup page
-export const signUpRedirect = async (req, res, next) => {
-  // User is authenticated
-  if (req.session.user) {
-    return res.redirect('/home/search')
-  }
-  // User is not signed in, let through to signup page
-  next()
-}
+  app.use('/gyms/signin', (req, res, next) => {
+    if (req.session.user) {
+      return res.redirect('/home/search');
+    }
+    next();
+  });
 
-// MW4: Redirects users to sign in if they are not, or falls through to end session
-export const signOut = async (req, res, next) => {
-  // User is not logged in
-  if (!req.session.user) {
-      return res.redirect('/home')
-  }
-  // User is signed in, let through to signout page
-  next()
-}
+  // MW3: Sign-up Redirect
+  app.use(['/users/signup', '/gyms/signup'], (req, res, next) => {
+    if (req.session.user) {
+      return res.redirect('/home/search'); // Prevent access if already signed in
+    }
+    next();
+  });
+
+  // MW4: Sign Out Middleware
+  app.use('/signout', (req, res, next) => {
+    if (!req.session.user) {
+      return res.redirect('/home'); // Redirect to home if no session
+    }
+    next();
+  });
+};
