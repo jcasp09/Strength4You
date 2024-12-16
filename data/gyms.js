@@ -4,10 +4,18 @@ import {gyms} from '../config/mongoCollections.js';
 import validation from '../validation.js'
 const saltRounds = 10;
 
+// Throws error if userId is already in the database
+const duplicateGymCheck = async (userId) => {
+    const gymCollection = await gyms()
+    const gym = await gymCollection.findOne({userId: userId})
+    if (gym) throw `Error: there is already a user with that user ID.`
+}
+
 // Create gym
-export const createGym = async (name, username, password, email, address, hours) => {
+export const createGym = async (name, userId, password, email, address, hours) => {
     name = validation.checkString(name)
-    username = validation.checkUser(username);
+    userId = validation.checkUser(userId);
+    await duplicateGymCheck(userId)
     password = validation.checkPassword(password)
     email = validation.checkEmail(email)
     address = validation.checkString(address)
@@ -27,7 +35,7 @@ export const createGym = async (name, username, password, email, address, hours)
 
     let newGym = {
         name,
-        username,
+        userId,
         password,
         email,
         address,
@@ -68,15 +76,15 @@ export const updateGym = async (id, gymObject) => {
     id = validation.checkId(id);
     if (!await this.getGymById(id))
         throw `Gym with ${id} not found`
-    let fields = ["name", "username", "password", "email", "address", "hours", "equipment", "classes", "extra", "link"];
+    let fields = ["name", "userId", "password", "email", "address", "hours", "equipment", "classes", "extra", "link"];
     Object.keys(gymObject).forEach((field) => {
         if (!fields.includes(field))
             throw `gymObject contains an invalid field for updating`
     })
     if (gymObject.name)
         gymObject.name = validation.checkString(gymObject.name)
-    if (gymObject.username)
-        gymObject.username = validation.checkUser(gymObject.username);
+    if (gymObject.userId)
+        gymObject.userId = validation.checkUser(gymObject.userId);
     if (gymObject.password)
         gymObject.password = validation.checkPassword(gymObject.password)
     if (gymObject.email)
