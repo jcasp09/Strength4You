@@ -1,10 +1,12 @@
+/* Styling Rules */
+
+
 /* General styling */
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f9;
     color: #333;
 }
-
 
 
 /* Form container */
@@ -66,9 +68,9 @@ button:hover {
 
 /* Link styling */
 a {
-    display: block;
-    margin-top: 15px;
-    text-align: center;
+    display: inline-block;
+    margin-top: 5px;
+    margin-bottom: 5px;
     color: #007BFF;
     text-decoration: none;
 }
