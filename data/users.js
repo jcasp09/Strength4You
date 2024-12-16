@@ -3,23 +3,35 @@ import bcrypt from 'bcryptjs'; // for hashing passwords
 import { users } from '../config/mongoCollections.js'; // user collection from database
 
 const exportedMethods = {
+  // Throws error if userId is already in the database
+  async duplicateUserCheck(userId) {
+    const userCollection = await users()
+    const user = await userCollection.findOne({userId: userId})
+    if (user) throw `Error: there is already a user with that user ID.`
+    return
+  },
+
+
   // create new user
-  async createUser(firstName, lastName, username, email, password, dob) {
-    const userCollection = await users();
-    const hashedPassword = await bcrypt.hash(password, 10); // Hash password before saving
+  async createUser(firstName, lastName, userId, password, email, dob, city, state) {
+    // Hash password before saving
+    const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = {
       firstName,
       lastName,
-      username,
+      userId,
+      password: hashedPassword,
       email,
-      hashedPassword,
       dob,
-      profilePicture: "no_image.jpeg",
+      city, 
+      state
     };
 
+    // Insert user object into database
+    const userCollection = await users();
     const insertInfo = await userCollection.insertOne(newUser);
-    return { ...newUser, _id: insertInfo.insertedId.toString() };
+    if (!insertInfo) throw `Error: Could not add user.`
   },
 
   // get a user by id

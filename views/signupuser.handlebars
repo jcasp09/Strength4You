@@ -4,7 +4,7 @@
 
 <main>
     <h1>Sign Up - User</h1>
-    <form action="/users/signup" method="POST">
+    <form action="/users/signup" method="POST" id="userSignUpForm">
         <div class="inputFields">
             <!-- First Name -->
             <div> <label for="firstName" class="label">First Name</label> </div>
@@ -27,6 +27,10 @@
             <div> <label for="confirmPassword" class="label">Confirm Password</label> </div>
             <div> <input type="password" name="confirmPassword" id="confirmPassword"> </div>
             <div class="error" id="confirmPasswordError" hidden></div>
+            <!-- Admin Key -->
+            <div> <label for="adminKey" class="label">Admin Key</label> </div>
+            <div> <input type="password" name="adminKey" id="adminKey" placeholder="End Users leave blank"> </div>
+            <div class="error" id="adminKey" hidden></div>
 
             <!-- Email -->
             <div> <label for="email" class="label">Email</label> </div>

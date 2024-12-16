@@ -1,11 +1,8 @@
-// import necessary libraries and user data functions
-// Import necessary libraries and user data functions
-// Import necessary libraries and user data functions
 import { Router } from 'express';
 import { ObjectId } from 'mongodb';
 import userData from '../data/users.js';
-
-const router = Router(); // Initialize router
+const router = Router();
+const key = 'admin'
 
 
 // /users/signup functionality
@@ -17,20 +14,24 @@ router
   })
   .post(async (req, res) => {
     // Render signin page
-    const { firstName, lastName, username, email, password, dob } = req.body;
+    const {firstName, lastName, userId, password, adminKey, email, dob, city, state} = req.body;
+
+    // Invalid admin key: redirect to error page
+    if (adminKey !== key) {
+      res.status(400).render('error', {error: 'Incorrect Admin password... We keep a tight ship around here mister!'})
+    }
 
     try {
-      const newUser = await userData.createUser(firstName, lastName, username, email, password, dob);
-      res.status(201).json({
-        _id: newUser._id,
-        firstName: newUser.firstName,
-        lastName: newUser.lastName,
-        username: newUser.username,
-        email: newUser.email,
-        dob: newUser.dob,
-      });
-    } catch (error) {
-      res.status(400).json({ error: error.message });
+      const newUser = await userData.createUser(firstName, lastName, userId, password, email, dob, city, state);
+      if (!newUser) {
+        res.status(500).render('error', {error: 'Could not add user'})
+      }
+      else {
+        res.status(200).render('signin')
+      }
+
+    } catch (e) {
+      res.status(400).render('error', {error: e})
     }
 });
 
