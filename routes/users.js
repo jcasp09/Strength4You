@@ -8,7 +8,6 @@ import userData from '../data/users.js';
 const router = Router(); // Initialize router
 
 
-
 // /users/signup functionality
 router
   .route('/signup')
