@@ -1,12 +1,19 @@
-import { Router } from 'express';
+import {Router} from 'express';
+import {ObjectId} from 'mongodb';
 import * as gymData from '../data/gyms.js';
 
 const router = Router();
 
-// Create a new gym profile
-router.post('/signup', async (req, res) => {
-    // Render signin page
-    res.render('signin')
+// /gyms/signup functionality
+router
+    .route('/signup')
+    .get(async (req, res) => {
+        // Render signup page
+        res.render('signupgym')
+    })
+    .post(async (req, res) => {
+        // Render signin page
+        res.render('signin')
 });
 
 // Get a gym by objectId

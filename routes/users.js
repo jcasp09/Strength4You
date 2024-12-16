@@ -7,24 +7,32 @@ import userData from '../data/users.js';
 
 const router = Router(); // Initialize router
 
-// Create a new user profile
-router.post('/signup', async (req, res) => {
-  // Render signin page
-  const { firstName, lastName, username, email, password, dob } = req.body;
 
-  try {
-    const newUser = await userData.createUser(firstName, lastName, username, email, password, dob);
-    res.status(201).json({
-      _id: newUser._id,
-      firstName: newUser.firstName,
-      lastName: newUser.lastName,
-      username: newUser.username,
-      email: newUser.email,
-      dob: newUser.dob,
-    });
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
+
+// /users/signup functionality
+router
+  .route('signup')
+  .get(async (req, res) => {
+    // Render signup page
+    res.render('signupuser')
+  })
+  .post(async (req, res) => {
+    // Render signin page
+    const { firstName, lastName, username, email, password, dob } = req.body;
+
+    try {
+      const newUser = await userData.createUser(firstName, lastName, username, email, password, dob);
+      res.status(201).json({
+        _id: newUser._id,
+        firstName: newUser.firstName,
+        lastName: newUser.lastName,
+        username: newUser.username,
+        email: newUser.email,
+        dob: newUser.dob,
+      });
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
 });
 
 // Get a user by ID
