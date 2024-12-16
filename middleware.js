@@ -40,7 +40,7 @@ export const signUpRedirect = async (req, res, next) => {
 export const signOut = async (req, res, next) => {
   // User is not logged in
   if (!req.session.user) {
-      return res.redirect('/signin')
+      return res.redirect('/home')
   }
   // User is signed in, let through to signout page
   next()
