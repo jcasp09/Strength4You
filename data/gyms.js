@@ -14,25 +14,24 @@ const duplicateGymCheck = async (userId) => {
 // Create gym
 export const createGym = async (name, userId, password, email, address, hours, role) => {
     // Server-side validation
-    name = validation.checkString(name)
+    name = validation.checkString(name);
     userId = validation.checkUser(userId);
-    await duplicateGymCheck(userId) // Check for duplicate gyms with userId
-    password = validation.checkPassword(password)
-    email = validation.checkEmail(email)
-    address = validation.checkString(address)
-    hours = validation.checkHours(hours)
+    await duplicateGymCheck(userId); // Check for duplicate gyms with userId
+    password = validation.checkPassword(password);
+    email = validation.checkEmail(email);
+    address = validation.checkString(address);
+    hours = validation.checkHours(hours);
 
-    let 
-    equipment = [],
-    classes = [],
-    extra = [],
-    link = "",
-    reviews = [],
-    rating = 0,
-    comments = [],
-    trainers = [];
+    let equipment = [],
+        classes = [],
+        extra = [],
+        link = "",
+        reviews = [],
+        rating = 0,
+        comments = [],
+        trainers = [];
 
-    password = await bcrypt.hash(password, saltRounds)
+    password = await bcrypt.hash(password, saltRounds);
 
     let newGym = {
         name,
@@ -50,18 +49,18 @@ export const createGym = async (name, userId, password, email, address, hours, r
         reviews,
         rating,
         comments,
-    }
-
-
+    };
 
     const gymsCollection = await gyms();
-
     const insertInfo = await gymsCollection.insertOne(newGym);
-    if (!insertInfo.acknowledged || !insertInfo.insertedId)
-        throw 'Could not add gym';
 
-    return insertInfo;
-}
+    if (!insertInfo.acknowledged || !insertInfo.insertedId) throw 'Could not add gym';
+
+    // Attach the insertedId to the gym object and return it
+    newGym._id = insertInfo.insertedId.toString();
+    return newGym;
+};
+
 
 
 export const signInGym = async (userId, password) => {
@@ -86,13 +85,15 @@ export const signInGym = async (userId, password) => {
 
 // Get gym by id
 export const getGymById = async (id) => {
-    id = validation.checkId(id);
-    const gymsCollection = await gyms();
-    gym = await gymsCollection.findOne()
-    const gym = await gymsCollection.findOne({_id: new ObjectId(id)});
-    if (!gym) throw 'Gym not found';
-    return gym;
-}
+    id = validation.checkId(id); // Validate the gym ID
+    const gymsCollection = await gyms(); // Get the collection
+
+    const gym = await gymsCollection.findOne({ _id: new ObjectId(id) }); // Query for gym
+    if (!gym) throw 'Gym not found'; // Throw an error if gym doesn't exist
+
+    return gym; // Return the gym
+};
+
 
 // Update gym content
 export const updateGym = async (id, gymObject) => {
@@ -148,3 +149,17 @@ export const deleteGym = async (id) => {
 
     return {_id: id, deleted: true};
 }
+
+export const addReview = async (gymId, userId, rating, comment) => {
+    const gymsCollection = await gyms();
+    const gym = await getGymById(gymId);
+    if (!gym) throw 'Gym not found';
+  
+    const review = { userId, rating, comment, createdAt: new Date() };
+    await gymsCollection.updateOne(
+      { _id: new ObjectId(gymId) },
+      { $push: { reviews: review } }
+    );
+  
+    return review;
+};

@@ -14,40 +14,29 @@ const duplicateUserCheck = async (userId) => {
 
 // create new user
 export const createUser = async (firstName, lastName, userId, password, email, dob, city, state, role) => {
-  // Server-side validation
-  firstName = validation.checkName(firstName)
-  lastName = validation.checkName(lastName)
-  userId = validation.checkUser(userId)
-  await duplicateUserCheck(userId) // Check for duplicate users with userId
-  password = validation.checkPassword(password)
-  email = validation.checkEmail(email)
-  dob = validation.checkDOB(dob)
-  city = validation.checkString(city)
-  state = validation.checkString(state)
-
-
-  // Hash password before saving
-  const hashedPassword = await bcrypt.hash(password, saltRounds);
+  const hashedPassword = await bcrypt.hash(password, 10);
 
   const newUser = {
-    firstName,
-    lastName,
-    userId,
-    password: hashedPassword,
-    email,
-    dob,
-    city, 
-    state,
-    role
-}
+      firstName,
+      lastName,
+      userId,
+      password: hashedPassword,
+      email,
+      dob,
+      city,
+      state,
+      role
+  };
 
-  // Insert user object into database
   const userCollection = await users();
   const insertInfo = await userCollection.insertOne(newUser);
-  if (!insertInfo) throw `Error: Could not add user.`
-  // User successfully added to db
-  return true
-}
+
+  if (!insertInfo.acknowledged || !insertInfo.insertedId) throw 'Could not add user';
+
+  newUser._id = insertInfo.insertedId.toString();
+  return newUser;
+};
+
 
 
 export const signInUser = async (userId, password) => {
