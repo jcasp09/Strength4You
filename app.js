@@ -3,7 +3,7 @@ const app = express();
 import exphbs from 'express-handlebars';
 import configRoutes from './routes/index.js';
 import session from 'express-session'
-import * as mw from './middleware.js'
+import { applyMiddleware } from './middleware.js';
 
 
 const rewriteUnsupportedBrowserMethods = (req, res, next) => {
@@ -33,13 +33,8 @@ app.use(session({
     cookie: {maxAge: 300000}
 }))
 
-// Call middleware (ex: app.use('/signinuser', mw.signInRedirect) )
-app.use(mw.rootRedirect)
-app.use('/users/signin', mw.signInRedirect)
-app.use('/gyms/signin', mw.signInRedirect)
-app.use('/users/signup', mw.signUpRedirect)
-app.use('/gyms/signup', mw.signUpRedirect)
-app.use('/signout', mw.signOut)
+// Apply middleware
+applyMiddleware(app);
 
 app.engine('handlebars', exphbs.engine({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');

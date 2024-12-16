@@ -1,53 +1,51 @@
 import { Router } from 'express';
 import { ObjectId } from 'mongodb';
 import * as gymData from '../data/gyms.js';
-import validation from '../validation.js';
+import validation from '../validation.js'
+import xss from 'xss'
+
 
 const router = Router();
 
 // /gyms/signup functionality
 router
-  .route('/signup')
-  .get(async (req, res) => {
-    // Render signup page
-    return res.render('signupgym');
-  })
-  .post(async (req, res) => {
-    // Render signin page
-    const hours = {
-      monday: req.body.monday,
-      tuesday: req.body.tuesday,
-      wednesday: req.body.wednesday,
-      thursday: req.body.thursday,
-      friday: req.body.friday,
-      saturday: req.body.staturday,
-      sunday: req.body.sunday,
-    };
-    const { name, userId, password, email, address } = req.body;
+    .route('/signup')
+    .get(async (req, res) => {
+        // Render signup page
+        return res.render('signupgym')
+    })
+    .post(async (req, res) => {
+        // Clean data (xss)
+        let name = xss(req.body.name)
+        let userId = xss(req.body.userId)
+        let password = xss(req.body.password)
+        let email = xss(req.body.email)
+        let address = xss(req.body.address)
+        let monday = xss(req.body.monday)
+        let tuesday = xss(req.body.tuesday)
+        let wednesday = xss(req.body.wednesday)
+        let thursday = xss(req.body.thursday)
+        let friday = xss(req.body.friday)
+        let saturday = xss(req.body.saturday)
+        let sunday = xss(req.body.sunday)
 
-    const role = 'gym';
+        const hours = {monday, tuesday, wednesday, thursday, friday, saturday, sunday}
+        const role = 'gym'
 
-    try {
-      const newGym = await gymData.createGym(
-        name,
-        userId,
-        password,
-        email,
-        address,
-        hours,
-        role
-      );
-      if (!newGym) {
-        return res
-          .status(500)
-          .render('error', { error: 'Could not add gym' });
-      } else {
-        return res.status(200).render('signingym');
-      }
-    } catch (e) {
-      return res.status(400).render('error', { error: e });
-    }
-  });
+        // Attempt to Sign Up as a gym
+        try {
+            const newGym = await gymData.createGym(name, userId, password, email, address, hours, role);
+            if (!newGym) {
+                return res.status(500).render('error', {error: 'Could not add gym'})
+            }
+            // Render signin page
+            else {
+                return res.status(200).render('signingym')
+            }
+        } catch (e) {
+            return res.status(400).render('error', {error: e})
+        }
+});
 
 // /gyms/signin functionality
 router
@@ -57,24 +55,22 @@ router
     return res.render('signingym');
   })
   .post(async (req, res) => {
-    // Validate req.body Sign In form fields: userId and password
-    let userId, password;
-    try {
-      userId = validation.checkUser(req.body.userId, 'User ID');
-    } catch (e) {
-      return res.status(400).render('signingym', { error: e });
-    }
-    try {
-      password = validation.checkPassword(req.body.password, 'Password');
-    } catch (e) {
-      return res.status(400).render('signingym', { error: e });
-    }
-
+    // Clean data (xss)
+    let userId = xss(req.body.userId)
+    let password = xss(req.body.password)
+    
+    // Attempt to Sign In as a gym
     try {
       const gym = await gymData.signInGym(userId, password);
 
-      req.session.user = gym;
-      return res.status(200).render('search');
+      if (!gym) {
+        return res.status(500).render('error', {error: 'Could not sign in gym'})
+      }
+      // Create session / Render signin page
+      else {
+        req.session.user = gym
+        return res.status(200).render('search')
+      }
     } catch (e) {
       return res.status(400).render('error', { error: e });
     }
