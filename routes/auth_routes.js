@@ -11,8 +11,9 @@ router.route('/').get(async (req, res) => {
 });
 
 router.route('/home').get(async (req, res) => {
-  return res.render('home')
+  return res.render('home', { user: req.session.user });
 });
+
 
 router.route('/home/search').get(async (req, res) => {
   return res.render('search')
@@ -20,10 +21,45 @@ router.route('/home/search').get(async (req, res) => {
 
 
 
-router.route('/signoutuser').get(async (req, res) => {
-  // Render Sign out handlebar after destroying user's session
-  req.session.destroy()
-  return res.render('signout')
+router.route('/signout').get(async (req, res) => {
+  try {
+    if (req.session) {
+      // Destroy the session
+      req.session.destroy((err) => {
+        if (err) {
+          console.error('Error destroying session:', err);
+          return res.status(500).render('error', {
+            title: 'Sign Out Error',
+            errorMessage: 'Failed to sign you out. Please try again.',
+          });
+        }
+
+        // Clear the session cookie
+        res.clearCookie('AuthenticationState');
+        console.log('User successfully signed out.');
+
+        // Render the dedicated signout page
+        return res.render('signout', { title: 'Signed Out' });
+      });
+    } else {
+      console.log('No active session to destroy. Redirecting to /home.');
+      return res.redirect('/home');
+    }
+  } catch (e) {
+    console.error('Unexpected error during sign out:', e.message);
+    return res.status(500).render('error', {
+      title: 'Sign Out Error',
+      errorMessage: 'An unexpected error occurred. Please try again.',
+    });
+  }
 });
+
+
+
+
+
+
+
+
 
 export default router

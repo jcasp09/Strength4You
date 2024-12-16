@@ -1,25 +1,36 @@
 <!-- Home page: includes 'Sign up as user' and 'Sign up as gym' buttons, 
     as well as a link: 'Already have an account? Sign In!' -->
 
-<title>Strength4You HomePage</title>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strength4You HomePage</title>
+    <link rel="stylesheet" href="/public/css/styles.css"> <!-- Link to your CSS -->
+</head>
+<body>
+    <main class="home-background">
+        <h1>Welcome to Strength4You</h1>
 
-<main class="home-background">
-    <h1>Welcome to Strength4You</h1>
-    <div class="container">
-        <br>
-        <br>
-        <h2>Create Account below!</h2>
+        <div class="container">
+            <br>
+            <h2>Create Account below!</h2>
 
-        <div>
-            <a href="/users/signup" id="signUpUserLink">Sign Up as User</a>
-            <a href="/users/signin" id="signInUserLink">Already Have an account? Sign in!</a>
+            <div>
+                <h3>For Users</h3>
+                <a href="/users/signup" id="signUpUserLink">Sign Up as User</a>
+                <a href="/users/signin" id="signInUserLink">Already Have an Account? Sign In!</a>
+            </div>
+            <div>
+                <h3>For Gyms</h3>
+                <a href="/gyms/signup" id="signUpGymLink">Sign Up as Gym</a>
+                <a href="/gyms/signin" id="signInGymLink">Already Have an Account? Sign In!</a>
+            </div>
+
+            <br>
+            <div><a href="/about">About Us</a></div>
         </div>
-        <div>
-            <a href="/gyms/signup" id="signUpGymLink">Sign Up as User</a>
-            <a href="/gyms/signin" id="signInGymLink">Already Have an account? Sign in!</a>
-        </div>
-
-        <br>
-        <div><a href="/about">About Us</a></div>
-    </div>
-</main>
+    </main>
+</body>
+</html>
