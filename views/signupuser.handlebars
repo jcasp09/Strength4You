@@ -5,26 +5,45 @@
 <main>
     <h1>Sign Up - User</h1>
     <form action="/users/signup" method="POST">
-        <label for="firstName">First Name:</label>
-        <input type="text" id="firstName" name="firstName" placeholder="Enter your first name" required>
+        <!-- First Name -->
+        <div> <label for="firstName" class="label">First Name</label> </div>
+        <div> <input type="text" name="firstName" id="firstName"> </div>
+        <div class="error" id="firstNameError" hidden></div>
+        <!-- Last Name -->
+        <div> <label for="lastName" class="label">Last Name</label> </div>
+        <div> <input type="text" name="lastName" id="lastName"> </div>
+        <div class="error" id="lastNameError" hidden></div>
 
-        <label for="lastName">Last Name:</label>
-        <input type="text" id="lastName" name="lastName" placeholder="Enter your last name" required>
+        <!-- User ID -->
+        <div> <label for="userId" class="label">User ID</label> </div>
+        <div> <input type="text" name="userId" id="userId"> </div>
+        <div class="error" id="userIdError" hidden></div>
+        <!-- Password -->
+        <div> <label for="password" class="label">Password</label> </div>
+        <div> <input type="password" name="password" id="password"> </div>
+        <div class="error" id="passwordError" hidden></div>
+        <!-- Confirm Password -->
+        <div> <label for="confirmPassword" class="label">Confirm Password</label> </div>
+        <div> <input type="password" name="confirmPassword" id="confirmPassword"> </div>
+        <div class="error" id="confirmPasswordError" hidden></div>
 
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" placeholder="Enter a username" required>
-
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" placeholder="Enter your email" required>
-
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" placeholder="Enter a password" required>
-
-        <label for="dob">Date of Birth:</label>
-        <input type="date" id="dob" name="dob" required>
-
-        <!-- etc. (see database proposal for required info -->
-
+        <!-- Email -->
+        <div> <label for="email" class="label">Email</label> </div>
+        <div> <input type="email" name="email" id="email"> </div>
+        <div class="error" id="emailError" hidden></div>
+        <!-- Date of Birth -->
+        <div> <label for="dob" class="label">Date of birth</label> </div>
+        <div> <input type="date" name="dob" id="dob"> </div>
+        <div class="error" id="dobError" hidden></div>
+        <!-- City -->
+        <div> <label for="city" class="label">City</label> </div>
+        <div> <input type="text" name="city" id="city"> </div>
+        <div class="error" id="cityError" hidden></div>
+        <!-- State -->
+        <div> <label for="state" class="label">State</label> </div>
+        <div> <input type="text" name="state" id="state"> </div>
+      
+        <!-- Sign Up Button -->
         <button type="submit">Sign Up</button>
     </form>
 </main>
