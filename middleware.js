@@ -26,25 +26,32 @@ export const applyMiddleware = (app) => {
   });
 
   // MW3: Sign-in Redirect
-  app.use('/users/signin', (req, res, next) => {
+  app.use(['/users/signin', '/gyms/signin'], (req, res, next) => {
     if (req.session.user) {
-      return res.redirect('/home/search'); // Already signed-in users to search
+      return res.redirect('/home/search'); // Prevent access if already signed in
     }
     next();
   });
 
-  // MW4: Sign-in Redirect
-  app.use('/gyms/signin', (req, res, next) => {
-    if (req.session.user) {
-      return res.redirect('/home/search');
-    }
-    next();
-  });
-
-  // MW5: Sign-up Redirect
+  // MW4: Sign-up Redirect
   app.use(['/users/signup', '/gyms/signup'], (req, res, next) => {
     if (req.session.user) {
       return res.redirect('/home/search'); // Prevent access if already signed in
+    }
+    next();
+  });
+
+  // MW5: Profile Redirect
+  app.use('/profile', (req, res, next) => {
+    if (!req.session.user) {
+      return res.redirect('/home');
+    }
+    const role = req.session.user.role
+    if (role === 'user' || role === 'admin') {
+      return res.redirect('/profile/user')
+    }
+    else if (role === 'gym') {
+      return res.redirect('/profile/gym')
     }
     next();
   });
