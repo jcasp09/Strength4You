@@ -1,0 +1,24 @@
+<!-- Sign in page (serves Gyms only, userId and password are only required fields -->
+
+<title>Sign In - Gym</title>
+
+<main>
+    <h1>Sign In - Gym</h1>
+    <form action="/gyms/signin" method="POST">
+        <div class="inputFields">
+            <!-- User ID -->
+            <div> <label for="userId" class="label">User ID</label> </div>
+            <div> <input type="text" name="userId" id="userId"> </div>
+            <div class="error" id="userIdError" hidden></div>
+            <!-- Password -->
+            <div> <label for="password" class="label">Password</label> </div>
+            <div> <input type="password" name="password" id="password"> </div>
+            <div class="error" id="passwordError" hidden></div>
+        </div>
+
+        <!-- Sign in button -->
+        <button type="submit">Sign In</button>
+    </form>
+
+    <!-- Include link here to redirect to home page-->
+</main>
