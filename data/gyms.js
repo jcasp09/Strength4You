@@ -13,9 +13,10 @@ const duplicateGymCheck = async (userId) => {
 
 // Create gym
 export const createGym = async (name, userId, password, email, address, hours) => {
+    // Server-side validation
     name = validation.checkString(name)
     userId = validation.checkUser(userId);
-    await duplicateGymCheck(userId)
+    await duplicateGymCheck(userId) // Check for duplicate gyms with userId
     password = validation.checkPassword(password)
     email = validation.checkEmail(email)
     address = validation.checkString(address)

@@ -1,6 +1,8 @@
 import { ObjectId } from 'mongodb'; // object id validation
 import bcrypt from 'bcryptjs'; // for hashing passwords
 import { users } from '../config/mongoCollections.js'; // user collection from database
+import validation from '../validation.js'
+saltRound = 10
 
 
 // Throws error if userId is already in the database
@@ -12,10 +14,20 @@ const duplicateUserCheck = async (userId) => {
 
 // create new user
 export const createUser = async (firstName, lastName, userId, password, email, dob, city, state) => {
-  // Check for user with that userId already in db
-  await duplicateUserCheck(userId)
+  // Server-side validation
+  firstName = validation.checkName(firstName)
+  lastName = validation.checkName(lastName)
+  userId = validation.checkUser(userId)
+  await duplicateUserCheck(userId) // Check for duplicate users with userId
+  password = validation.checkPassword(password)
+  email = validation.checkEmail(email)
+  dob = validation.checkDOB(dob)
+  city = validation.checkString(city)
+  state = validation.checkString(state)
+
+
   // Hash password before saving
-  const hashedPassword = await bcrypt.hash(password, 10);
+  const hashedPassword = await bcrypt.hash(password, saltRounds);
 
   const newUser = {
     firstName,
