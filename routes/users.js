@@ -1,6 +1,8 @@
 import { Router } from 'express';
 import { ObjectId } from 'mongodb';
 import * as userData from '../data/users.js';
+import validation from '../validation.js'
+
 const router = Router();
 const key = 'admin'
 
@@ -43,6 +45,41 @@ router
       res.status(400).render('error', {error: e})
     }
 });
+
+// /users/signin functionality
+router
+  .route('/signin')
+  .get(async (req, res) => {
+    // Render signup page
+    res.render('signinuser')
+  })
+  .post(async (req, res) => {
+    // Validate req.body Sign In form fields: userId and password)
+    let userId, password
+    try {
+      userId = validation.checkUser(req.body.userId, 'User ID')
+    } catch (e) {
+      return res.status(400).render('signinuser', {error: e})
+    }
+    try {
+      password = validation.checkPassword(req.body.password, 'Password')
+    } catch (e) {
+      return res.status(400).render('signinuser', {error: e})
+    }
+
+    try {
+      const user = await userData.signInUser(userId, password);
+
+      req.session.user = user
+      return res.status(200).render('search')
+
+    } catch (e) {
+      res.status(400).render('error', {error: e})
+    }
+});
+
+
+
 
 // Get a user by ID
 router.get('/:id', async (req, res) => {
