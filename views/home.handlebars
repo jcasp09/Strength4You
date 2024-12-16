@@ -9,50 +9,33 @@
         <br>
         <br>
 
-        <!-- Message for Unauthenticated Users -->
-        <h2 id="createAccountMessage">Create Account below!</h2>
+        <!-- Display for Unauthenticated Users -->
+        {{#unless user}}
+            <h2 id="createAccountMessage">Create Account below!</h2>
 
-        <!-- Sign Up and Sign In Options -->
-        <div id="authOptions">
-            <div>
-                <a href="/users/signup" id="signUpUserLink">Sign Up as User</a>
-                <a href="/users/signin" id="signInUserLink">Already Have an account? Sign in!</a>
+            <div id="authOptions">
+                <div>
+                    <a href="/users/signup" id="signUpUserLink">Sign Up as User</a>
+                    <a href="/users/signin" id="signInUserLink">Already Have an account? Sign in!</a>
+                </div>
+                <div>
+                    <a href="/gyms/signup" id="signUpGymLink">Sign Up as Gym</a>
+                    <a href="/gyms/signin" id="signInGymLink">Already Have an account? Sign in!</a>
+                </div>
             </div>
-            <div>
-                <a href="/gyms/signup" id="signUpGymLink">Sign Up as Gym</a>
-                <a href="/gyms/signin" id="signInGymLink">Already Have an account? Sign in!</a>
-            </div>
-        </div>
+        {{/unless}}
 
-        <!-- Message for Authenticated Users -->
-        <div id="signedInOptions" style="display: none;">
-            <h2 style="font-size: 2em; color: #333;">You are already signed in!</h2>
-            <a href="/home/search" id="searchMenuButton" style="font-size: 1.5em; display: inline-block; margin-top: 10px;">
-                Go to Search Menu
-            </a>
-        </div>
+        <!-- Display for Authenticated Users -->
+        {{#if user}}
+            <div id="signedInOptions">
+                <h2 style="font-size: 2em; color: #333;">You are already signed in!</h2>
+                <a href="/home/search" id="searchMenuButton" style="font-size: 1.5em; display: inline-block; margin-top: 10px;">
+                    Go to Search Menu
+                </a>
+            </div>
+        {{/if}}
 
         <br>
         <div><a href="/about">About Us</a></div>
     </div>
 </main>
-
-<!-- jQuery Script to Toggle Content for Authenticated Users -->
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<script>
-    $(document).ready(function() {
-        // Server-side authentication check using Handlebars
-        const isAuthenticated = {{#if user}}true{{else}}false{{/if}};
-
-        if (isAuthenticated) {
-            // Hide 'Create Account' message and sign-in/sign-up options
-            $('#createAccountMessage').hide();
-            $('#authOptions').hide();
-
-            // Show the search menu button and larger message for authenticated users
-            $('#signedInOptions').show();
-
-            console.log('User is authenticated. Hiding sign-in options and replacing message.');
-        }
-    });
-</script>

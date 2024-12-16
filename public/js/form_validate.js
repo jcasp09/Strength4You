@@ -353,3 +353,26 @@ $('#signInUser').submit((event) => {
        event.target.submit()
     }
  })
+
+ // Client-side validation and hiding the sign-up/sign-in for authenticated users (people already logged in)
+$(document).ready(function () {
+    // Check for the injected isAuthenticated variable
+    if (typeof isAuthenticated !== 'undefined' && isAuthenticated) {
+        console.log('User is authenticated. Hiding sign-up and sign-in options.');
+
+        // Hide sign-up and sign-in links to avoid redundancy 
+        $('#signUpUserLink, #signInUserLink, #signUpGymLink, #signInGymLink').hide();
+
+        // Modify the message showing the user is already signed in
+        $('#createAccountMessage').text('You are already signed in!');
+
+        // This adds a button to return to the search page
+        $('.container').append(`
+            <div style="margin-top: 20px;">
+                <a href="/home/search" id="searchMenuButton" style="font-size: 1.2em; color: #007BFF; text-decoration: none;">
+                    Go to Search Menu
+                </a>
+            </div>
+        `);
+    }
+});
