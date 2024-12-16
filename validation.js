@@ -59,7 +59,14 @@ const exportedMethods = {
     },
 
     checkDOB(dob) {
-        if (!dob || isNaN(Date.parse(dob))) throw 'invalid date of birth'
+        let date = new Date(dob)
+        let today = new Date()
+        if (isNaN(date.getTime()))
+            throw `Invalid dob supplied`
+        if (date.getFullYear() > today.getFullYear() ||
+            date.getFullYear() === today.getFullYear() && date.getMonth() > today.getMonth() ||
+            date.getFullYear() === today.getFullYear() && date.getMonth() === today.getMonth() && date.getDate() > today.getDate())
+            throw `Cannot set a dob in the future`
     },
 
     checkId(id, varName) {
@@ -159,6 +166,21 @@ const exportedMethods = {
         link = this.checkString(link, "Link");
         new URL(link);
         return link;
+    },
+
+    checkState(state) {
+        state = checkString(state, "State")
+        const validStates = [
+            'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA',
+            'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD',
+            'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ',
+            'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC',
+            'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'
+          ];
+        if (!validStates.includes(state))
+            throw `Invalid State supplied`
+    
+        return state;
     }
 };
 

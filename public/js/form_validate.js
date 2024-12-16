@@ -58,7 +58,14 @@ function checkEmail(email) {
 }
 
 function checkDOB(dob) {
-    if (!dob || isNaN(Date.parse(dob))) throw 'invalid date of birth'
+    let date = new Date(dob)
+    let today = new Date()
+    if (isNaN(date.getTime()))
+        throw `Invalid dob supplied`
+    if (date.getFullYear() > today.getFullYear() ||
+        date.getFullYear() === today.getFullYear() && date.getMonth() > today.getMonth() ||
+        date.getFullYear() === today.getFullYear() && date.getMonth() === today.getMonth() && date.getDate() > today.getDate())
+        throw `Cannot set a dob in the future`
 }
 
 function checkDay(day) {
@@ -72,6 +79,21 @@ function checkDay(day) {
     if (period1 == period2 && end <= start && day !== "12am-12am")
         throw `Day's Hours are invalid`
     return day;
+}
+
+function checkState(state) {
+    state = checkString(state, "State")
+    const validStates = [
+        'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA',
+        'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD',
+        'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ',
+        'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC',
+        'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'
+      ];
+    if (!validStates.includes(state))
+        throw `Invalid State supplied`
+
+    return state;
 }
 
 
@@ -101,7 +123,7 @@ $('#userSignUpForm').submit(async (event) => {
 
     // Validate User ID
     try {
-        checkUser($('#userId').val(), 'User ID')
+        checkUser($('#userId').val())
     } catch (e) {
         validForm = false
         $('#userIdError').text(e).show()
@@ -109,7 +131,7 @@ $('#userSignUpForm').submit(async (event) => {
 
     // Validate Password and Confirm Password
     try {
-        checkPassword($('#password').val(), 'Password');
+        checkPassword($('#password').val());
         if ($('#password').val() !== $('#confirmPassword').val()) {
             throw new Error("Passwords do not match.");
         }
@@ -121,19 +143,19 @@ $('#userSignUpForm').submit(async (event) => {
 
     // Validate Email (optional?)
     try {
-        checkEmail($('#email').val(), 'Email')
+        checkEmail($('#email').val())
     } catch (e) {
         validForm = false
         $('#emailError').text(e).show()
     }
 
-    // Validate Date of Birth (optional?)
-    // try {
-    //     checkDOB($('#dob').val(), 'Email')
-    // } catch (e) {
-    //     validForm = false
-    //     $('#dobError').text(e).show()
-    // }
+    //Validate Date of Birth (optional?)
+    try {
+        checkDOB($('#dob').val())
+    } catch (e) {
+        validForm = false
+        $('#dobError').text(e).show()
+    }
 
     // Validate City
     try {
@@ -145,7 +167,7 @@ $('#userSignUpForm').submit(async (event) => {
 
     // Validate State
     try {
-        checkString($('#state').val(), 'State')
+        checkState($('#state').val())
     } catch (e) {
         validForm = false
         $('#stateError').text(e).show()
