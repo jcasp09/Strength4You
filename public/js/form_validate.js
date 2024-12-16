@@ -24,9 +24,9 @@ $('#userSignUpForm').submit(async (event) => {
         $('#lastNameError').text(e).show()
     }
 
-    // Validate User ID (change checkName to a userId checker or something)
+    // Validate User ID
     try {
-        checkName($('#userId').val(), 'User ID')
+        checkUser($('#userId').val(), 'User ID')
     } catch (e) {
         validForm = false
         $('#userIdError').text(e).show()

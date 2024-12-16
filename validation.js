@@ -1,6 +1,71 @@
 import {ObjectId} from 'mongodb';
 
+
+// Global Functions
+
+function checkName(name, varName) {
+    name = this.checkString(name, varName)
+    if (/\d/.test(name))
+        throw `Error: ${varName} cannot contain digits`
+    if (name.length < 2 || name.length > 25)
+        throw `Error: ${varName} needs to be at least 2 characters long and must not exceed 25 characters`
+
+    return name
+}
+
+function checkString(strVal, varName) {
+    if (!strVal) throw `Error: You must supply a ${varName}!`;
+    if (typeof strVal !== 'string') throw `Error: ${varName} must be a string!`;
+    strVal = strVal.trim();
+    if (strVal.length === 0)
+        throw `Error: ${varName} cannot be an empty string or string with just spaces`;
+    if (!isNaN(strVal))
+        throw `Error: ${strVal} is not a valid value for ${varName} as it only contains digits`;
+    return strVal;
+}
+
+function checkUser(user) {
+    user = this.checkString(user, "User ID")
+    if (/\d/.test(user))
+        throw `Error: User ID cannot contain digits`
+    if (user.length < 5 || user.length > 10)
+        throw `Error: User ID needs to be at least 5 characters long and must not exceed 25 characters`
+
+    return user.toLowerCase();
+}
+
+function checkPassword(password) {
+    password = this.checkString(password, "Password");
+    if (/\s/.test(password))
+        throw `Error: Password cannot contain spaces`
+
+    if (password.length < 8)
+        throw `Error: Password must be at least 8 characters long`
+
+    if (!/[!@#$%^&*(),.?":{}|<>]/.test(password))
+        throw `Error: Password must contain at least one special character`
+
+    if (!/\d/.test(password))
+        throw `Error: Password must contain at least one digit`
+
+    if (!/[A-Z]/.test(password))
+        throw `Error: Password must contain at least one uppercase alphabetical character`
+
+    return password
+}
+
+function checkEmail(email) {
+    email = this.checkString(email, "Email")
+    if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email))
+        throw `Invalid email supplied`
+    return email
+}
+
+
+// Functions able to export
+
 const exportedMethods = {
+
     checkId(id, varName) {
         if (!id) throw `Error: You must provide a ${varName}`;
         if (typeof id !== 'string') throw `Error:${varName} must be a string`;
@@ -9,17 +74,6 @@ const exportedMethods = {
             throw `Error: ${varName} cannot be an empty string or just spaces`;
         if (!ObjectId.isValid(id)) throw `Error: ${varName} invalid object ID`;
         return id;
-    },
-
-    checkString(strVal, varName) {
-        if (!strVal) throw `Error: You must supply a ${varName}!`;
-        if (typeof strVal !== 'string') throw `Error: ${varName} must be a string!`;
-        strVal = strVal.trim();
-        if (strVal.length === 0)
-            throw `Error: ${varName} cannot be an empty string or string with just spaces`;
-        if (!isNaN(strVal))
-            throw `Error: ${strVal} is not a valid value for ${varName} as it only contains digits`;
-        return strVal;
     },
 
     checkNumber(val, varName) {
@@ -39,43 +93,15 @@ const exportedMethods = {
 
     checkObject(obj, objName) {
         if (typeof obj !== 'object') {
-          throw `${objName} is not an object`;
+            throw `${objName} is not an object`;
         }
         if (Object.keys(obj).length === 0)
             throw `${objName} has no fields`
     },
 
-    checkUser(user) {
-        user = this.checkString(user, "User ID")
-        if (/\d/.test(user))
-            throw `Error: User ID cannot contain digits`
-        if (user.length < 5 || user.length > 10)
-            throw `Error: User ID needs to be at least 5 characters long and must not exceed 25 characters`
-
-        return user.toLowerCase();
+    checkDOB(dob) {
+        if (!dob || isNaN(Date.parse(dob))) throw 'invalid date of birth'
     },
-
-    checkPassword(password) {
-        password = this.checkString(password, "Password");
-        if (/\s/.test(password))
-            throw `Error: Password cannot contain spaces`
-
-        if (password.length < 8)
-            throw `Error: Password must be at least 8 characters long`
-
-        if (!/[!@#$%^&*(),.?":{}|<>]/.test(password))
-            throw `Error: Password must contain at least one special character`
-
-        if (!/\d/.test(password))
-            throw `Error: Password must contain at least one digit`
-
-        if (!/[A-Z]/.test(password))
-            throw `Error: Password must contain at least one uppercase alphabetical character`
-
-        return password
-    },
-
-    checkDOB(dob) { if (!dob || isNaN(Date.parse(dob))) throw 'invalid date of birth' },
 
     checkCommentBody(body) {
         body = this.checkString(body, "Comment Body")
@@ -84,15 +110,6 @@ const exportedMethods = {
         return body;
     },
 
-    checkName(name, varName) {
-        name = this.checkString(name, varName)
-        if (/\d/.test(name))
-            throw `Error: ${varName} cannot contain digits`
-        if (name.length < 2 || name.length > 25)
-            throw `Error: ${varName} needs to be at least 2 characters long and must not exceed 25 characters`
-
-        return name
-    },
 
     checkHours(hours) {
         this.checkObject(hours, "Hours");
@@ -114,13 +131,6 @@ const exportedMethods = {
         if (period1 == period2 && end <= start && day !== "12am-12am")
             throw `Day's Hours are invalid`
         return day;
-    },
-
-    checkEmail(email) {
-        email = this.checkString(email, "Email")
-        if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email))
-            throw `Invalid email supplied`
-        return email
     },
 
     checkEquipment(equipment) {
@@ -157,8 +167,24 @@ const exportedMethods = {
         link = this.checkString(link, "Link");
         new URL(link);
         return link;
-    },
-    
+    }
+}
+
+
+
+// Validation functions added to window (global)
+const validationFunctions = {
+    checkString,
+    checkEmail,
+    checkPassword,
+    checkUser,
+    checkName
 };
 
-export default exportedMethods;
+// Attach validation functions to the window object dynamically
+Object.keys(validationFunctions).forEach(function (func) {
+    window[func] = validationFunctions[func];
+});
+
+
+export default exportedMethods
