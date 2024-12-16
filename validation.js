@@ -14,9 +14,9 @@ const exportedMethods = {
 
     checkUser(user) {
         user = this.checkString(user, "User ID")
-        if (/\d/.test(user))
-            throw `Error: User ID cannot contain digits`
-        if (user.length < 5 || user.length > 10)
+        // if (/\d/.test(user))
+        //     throw `Error: User ID cannot contain digits`
+        if (user.length < 5 || user.length > 25)
             throw `Error: User ID needs to be at least 5 characters long and must not exceed 25 characters`
 
         return user.toLowerCase();
@@ -110,7 +110,7 @@ const exportedMethods = {
             throw `Invalid Hours: Too many fields supplied`
         let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
-        days = days.ForEach((day) => hours[day] = this.checkDay(hours[day]))
+        days = days.forEach((day) => hours[day] = this.checkDay(hours[day]))
         return hours;
     },
 
