@@ -2,7 +2,7 @@ import { ObjectId } from 'mongodb'; // object id validation
 import bcrypt from 'bcryptjs'; // for hashing passwords
 import { users } from '../config/mongoCollections.js'; // user collection from database
 import validation from '../validation.js'
-saltRound = 10
+const saltRound = 10
 
 
 // Throws error if userId is already in the database
