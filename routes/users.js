@@ -2,6 +2,8 @@ import { Router } from 'express';
 import { ObjectId } from 'mongodb';
 import * as userData from '../data/users.js';
 import validation from '../validation.js'
+import xss from 'xss'
+
 
 const router = Router();
 const key = 'admin'
@@ -15,9 +17,18 @@ router
     return res.render('signupuser')
   })
   .post(async (req, res) => {
-    // Render signin page
-    const {firstName, lastName, userId, password, adminKey, email, dob, city, state} = req.body;
+    // Clean data (xss)
+    let firstName = xss(req.body.firstName)
+    let lastName = xss(req.body.lastName)
+    let userId = xss(req.body.userId)
+    let password = xss(req.body.password)
+    let adminKey = xss(req.body.adminKey)
+    let email = xss(req.body.email)
+    let dob = xss(req.body.dob)
+    let city = xss(req.body.city)
+    let state = xss(req.body.state)
 
+    
     // Invalid admin key: redirect to error page
     if (adminKey && adminKey !== key) {
       return res.status(400).render('error', {error: 'Incorrect Admin password... We keep a tight ship around here mister!'})
@@ -32,15 +43,17 @@ router
       role = 'user'
     }
 
+    
+    // Attempt to Sign Up as a user
     try {
       const newUser = await userData.createUser(firstName, lastName, userId, password, email, dob, city, state, role);
       if (!newUser) {
         return res.status(500).render('error', {error: 'Could not add user'})
       }
+      // Render signin page
       else {
         return res.status(200).render('signinuser')
       }
-
     } catch (e) {
       return res.status(400).render('error', {error: e})
     }
@@ -54,25 +67,22 @@ router
     return res.render('signinuser')
   })
   .post(async (req, res) => {
-    // Validate req.body Sign In form fields: userId and password)
-    let userId, password
-    try {
-      userId = validation.checkUser(req.body.userId, 'User ID')
-    } catch (e) {
-      return res.status(400).render('signinuser', {error: e})
-    }
-    try {
-      password = validation.checkPassword(req.body.password, 'Password')
-    } catch (e) {
-      return res.status(400).render('signinuser', {error: e})
-    }
+    // Clean data (xss)
+    let userId = xss(req.body.userId)
+    let password = xss(req.body.password)
 
+    // Attempt to Sign In as a user
     try {
-      const user = await userData.signInUser(userId, password);
+      const user = await userData.signInUser(userId, password)
 
-      req.session.user = user
-      return res.status(200).render('search')
-
+      if (!user) {
+        return res.status(500).render('error', {error: 'Could not sign in user'})
+      }
+      // Create session / Render signin page
+      else {
+        req.session.user = user
+        return res.status(200).render('search')
+      }
     } catch (e) {
       return res.status(400).render('error', {error: e})
     }
