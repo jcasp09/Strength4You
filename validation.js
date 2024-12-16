@@ -115,6 +115,7 @@ const exportedMethods = {
     },
 
     checkDay(day) {
+        if (!day) return "Closed"
         day = this.checkString(day, "Day");
         if (!/^(0[1-9]|1[0-2])(am|pm)-0[1-9]|1[0-2](am|pm)$/.test(day) && day !== "Closed")
             throw `Day's Hours is in invalid format`
