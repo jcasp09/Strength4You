@@ -47,10 +47,10 @@ export const applyMiddleware = (app) => {
       return res.redirect('/home');
     }
     const role = req.session.user.role
-    if (role === 'user' || role === 'admin') {
+    if (role === 'user' || role === 'admin' && req.originalUrl !== "/profile/user") {
       return res.redirect('/profile/user')
     }
-    else if (role === 'gym') {
+    else if (role === 'gym' && req.originalUrl !== "/profile/gym") {
       return res.redirect('/profile/gym')
     }
     next();

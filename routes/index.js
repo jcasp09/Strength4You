@@ -7,7 +7,7 @@ import {static as staticDir} from 'express'; // serve static files
 const constructorMethod = (app) => {
     app.use('/public', staticDir('public'));
     app.use('/', authRoutes);
-    app.use('/profile', authRoutes);
+    app.use('/profile', profileRoutes);
     app.use('/users', userRoutes);
     app.use('/gyms', gymRoutes);
     app.use('/about', (req, res) => {res.render('aboutus')})
