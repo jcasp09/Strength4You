@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { ObjectId } from 'mongodb';
-import userData from '../data/users.js';
+import * as userData from '../data/users.js';
 const router = Router();
 const key = 'admin'
 

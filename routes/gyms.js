@@ -13,7 +13,22 @@ router
     })
     .post(async (req, res) => {
         // Render signin page
-        res.render('signin')
+        const hours = {monday:req.body.monday, tuesday:req.body.tuesday, 
+                       wednesday:req.body.wednesday, thursday:req.body.thursday, 
+                       friday:req.body.friday, saturday:req.body.staturday, sunday:req.body.sunday}
+        const {name, userId, password, email, address} = req.body
+
+        try {
+            const newGym = await gymData.createGym(name, userId, password, email, address, hours);
+            if (!newGym) {
+              res.status(500).render('error', {error: 'Could not add gym'})
+            }
+            else {
+              res.status(200).render('signin')
+            }
+        } catch (e) {
+            res.status(400).render('error', {error: e})
+        }
 });
 
 // Get a gym by objectId

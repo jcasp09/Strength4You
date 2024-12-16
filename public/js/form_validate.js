@@ -13,9 +13,9 @@ function checkName(name, varName) {
 
 function checkUser(user) {
     user = checkString(user, "User ID")
-    if (/\d/.test(user))
-        throw `Error: User ID cannot contain digits`
-    if (user.length < 5 || user.length > 10)
+    // if (/\d/.test(user))
+    //     throw `Error: User ID cannot contain digits`
+    if (user.length < 5 || user.length > 25)
         throw `Error: User ID needs to be at least 5 characters long and must not exceed 25 characters`
 
     return user.toLowerCase();
