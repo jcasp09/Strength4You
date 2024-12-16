@@ -17,7 +17,7 @@ router
     const {firstName, lastName, userId, password, adminKey, email, dob, city, state} = req.body;
 
     // Invalid admin key: redirect to error page
-    if (adminKey !== key) {
+    if (adminKey && adminKey !== key) {
       res.status(400).render('error', {error: 'Incorrect Admin password... We keep a tight ship around here mister!'})
     }
 

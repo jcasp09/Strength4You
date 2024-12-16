@@ -5,11 +5,11 @@ import validation from '../validation.js'
 const saltRounds = 10;
 
 // Create gym
-export const createGym = async (name, username, password, email, address, hours, equipment, classes, extra, link) => {
+export const createGym = async (name, username, password, email, address, hours) => {
     name = validation.checkString(name)
     username = validation.checkUser(username);
-    email = validation.checkEmail(email);
     password = validation.checkPassword(password)
+    email = validation.checkEmail(email)
     address = validation.checkString(address)
     hours = validation.checkHours(hours)
 
