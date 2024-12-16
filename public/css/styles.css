@@ -1,43 +1,53 @@
 /* General styling */
 body {
     font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
     background-color: #f4f4f9;
     color: #333;
 }
 
-/* Center the sign-in page */
-.container {
-    max-width: 400px;
-    margin: 100px auto;
-    padding: 20px;
-    background: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+
+/* Form container */
+.formContainer {
+    display: flex;
+    justify-content: flex-start;
+    gap: 2rem; /* Space between sections */
 }
+.inputFields,
+#hoursFields {
+    flex: 1; /* Ensure sections take up equal width */
+    max-width: 25%; /* Prevent overflow of any section */
+}
+.inputFields {
+    display: flex;
+    flex-direction: column;
+    gap: .6rem; /* Space between input fields */
+}
+#hoursFields {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem; /* Space between hour input fields */
+}
+
+
 
 /* Form elements */
 form {
     display: flex;
     flex-direction: column;
 }
-
 label {
-    margin-bottom: 5px;
     font-weight: bold;
 }
-
-input[type="text"],
-input[type="password"] {
-    margin-bottom: 15px;
-    padding: 10px;
+input {
     border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
+    font-size: 15px;
 }
 
+
+/* Button */
 button {
+    margin-top: 20px;
     padding: 10px;
     background-color: #007BFF;
     color: #fff;
@@ -46,11 +56,13 @@ button {
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    width: auto;
+    max-width: 450px;
 }
-
 button:hover {
     background-color: #0056b3;
 }
+
 
 /* Link styling */
 a {
@@ -60,7 +72,6 @@ a {
     color: #007BFF;
     text-decoration: none;
 }
-
 a:hover {
     text-decoration: underline;
 }

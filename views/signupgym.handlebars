@@ -5,83 +5,86 @@
 <main>
     <h1>Sign Up - Gym</h1>
     <form action="/gyms/signup" method="POST">
-        <!-- Gym Name -->
-        <div> <label for="name" class="label">Gym Name</label> </div>
-        <div> <input type="text" name="name" id="name"> </div>
-        <div class="error" id="nameError" hidden></div>
+        <div id="formContainer">
+            <div id="inputFields">
+                <!-- Gym Name -->
+                <div> <label for="name" class="label">Gym Name</label> </div>
+                <div> <input type="text" name="name" id="name"> </div>
+                <div class="error" id="nameError" hidden></div>
 
-        <!-- User ID -->
-        <div> <label for="userId" class="label">User ID</label> </div>
-        <div> <input type="text" name="userId" id="userId"> </div>
-        <div class="error" id="userIdError" hidden></div>
-        <!-- Password -->
-        <div> <label for="password" class="label">Password</label> </div>
-        <div> <input type="password" name="password" id="password"> </div>
-        <div class="error" id="passwordError" hidden></div>
-        <!-- Confirm Password -->
-        <div> <label for="confirmPassword" class="label">Confirm Password</label> </div>
-        <div> <input type="password" name="confirmPassword" id="confirmPassword"> </div>
-        <div class="error" id="confirmPasswordError" hidden></div>
+                <!-- User ID -->
+                <div> <label for="userId" class="label">User ID</label> </div>
+                <div> <input type="text" name="userId" id="userId"> </div>
+                <div class="error" id="userIdError" hidden></div>
+                <!-- Password -->
+                <div> <label for="password" class="label">Password</label> </div>
+                <div> <input type="password" name="password" id="password"> </div>
+                <div class="error" id="passwordError" hidden></div>
+                <!-- Confirm Password -->
+                <div> <label for="confirmPassword" class="label">Confirm Password</label> </div>
+                <div> <input type="password" name="confirmPassword" id="confirmPassword"> </div>
+                <div class="error" id="confirmPasswordError" hidden></div>
 
-        <!-- Email -->
-        <div> <label for="email" class="label">Email</label> </div>
-        <div> <input type="email" name="email" id="email"> </div>
-        <div class="error" id="emailError" hidden></div>
-        <!-- Address -->
-        <div> <label for="address" class="label">Address</label> </div>
-        <div> <input type="text" name="address" id="address"> </div>
-        <div class="error" id="addressError" hidden></div>
+                <!-- Email -->
+                <div> <label for="email" class="label">Email</label> </div>
+                <div> <input type="email" name="email" id="email"> </div>
+                <div class="error" id="emailError" hidden></div>
+                <!-- Address -->
+                <div> <label for="address" class="label">Address</label> </div>
+                <div> <input type="text" name="address" id="address"> </div>
+                <div class="error" id="addressError" hidden></div>
+            </div>
 
+            <!-- Hours -->
+            <fieldset id="hoursFields">
+                <legend>Enter Operating Hours</legend>
+                <p>Example: '8am-10pm' (hh[a/p]m-hh[a/p]m)</p>
 
-        <!-- Hours -->
-        <fieldset>
-            <legend>Enter Operating Hours</legend>
-            <p>Example: '8am-10pm' (hh[a/p]m-hh[a/p]m)</p>
-
-            <!-- Monday -->
-            <div>
-                <label for="mon">Monday:</label>
-                <input type="text" id="mon" name="Mon" placeholder="Closed">
-                <p class="error" id="monError" hidden></p>
-            </div>
-            <!-- Tuesday -->
-            <div>
-                <label for="tue">Tuesday:</label>
-                <input type="text" id="tue" name="Tue" placeholder="Closed">
-                <p class="error" id="tueError" hidden></p>
-            </div>
-            <!-- Wednesday -->
-            <div>
-                <label for="wed">Wednesday:</label>
-                <input type="text" id="wed" name="Wed" placeholder="Closed">
-                <p class="error" id="wedError" hidden></p>
-            </div>
-            <!-- Thursday -->
-            <div>
-                <label for="thu">Thursday:</label>
-                <input type="text" id="thu" name="Thu" placeholder="Closed">
-                <p class="error" id="thuError" hidden></p>
-            </div>
-            <!-- Friday -->
-            <div>
-                <label for="fri">Friday:</label>
-                <input type="text" id="fri" name="Fri" placeholder="Closed">
-                <p class="error" id="friError" hidden></p>
-            </div>
-            <!-- Saturday -->
-            <div>
-                <label for="sat">Saturday:</label>
-                <input type="text" id="sat" name="Sat" placeholder="Closed">
-                <p class="error" id="satError" hidden></p>
-            </div>
-            <!-- Sunday -->
-            <div>
-                <label for="sun">Sunday:</label>
-                <input type="text" id="sun" name="Sun" placeholder="Closed">
-                <p class="error" id="sunError" hidden></p>
-            </div>
-        </fieldset>
-
+                <!-- Monday -->
+                <div>
+                    <label for="mon">Monday:</label>
+                    <input type="text" id="mon" name="Mon" placeholder="Closed">
+                    <p class="error" id="monError" hidden></p>
+                </div>
+                <!-- Tuesday -->
+                <div>
+                    <label for="tue">Tuesday:</label>
+                    <input type="text" id="tue" name="Tue" placeholder="Closed">
+                    <p class="error" id="tueError" hidden></p>
+                </div>
+                <!-- Wednesday -->
+                <div>
+                    <label for="wed">Wednesday:</label>
+                    <input type="text" id="wed" name="Wed" placeholder="Closed">
+                    <p class="error" id="wedError" hidden></p>
+                </div>
+                <!-- Thursday -->
+                <div>
+                    <label for="thu">Thursday:</label>
+                    <input type="text" id="thu" name="Thu" placeholder="Closed">
+                    <p class="error" id="thuError" hidden></p>
+                </div>
+                <!-- Friday -->
+                <div>
+                    <label for="fri">Friday:</label>
+                    <input type="text" id="fri" name="Fri" placeholder="Closed">
+                    <p class="error" id="friError" hidden></p>
+                </div>
+                <!-- Saturday -->
+                <div>
+                    <label for="sat">Saturday:</label>
+                    <input type="text" id="sat" name="Sat" placeholder="Closed">
+                    <p class="error" id="satError" hidden></p>
+                </div>
+                <!-- Sunday -->
+                <div>
+                    <label for="sun">Sunday:</label>
+                    <input type="text" id="sun" name="Sun" placeholder="Closed">
+                    <p class="error" id="sunError" hidden></p>
+                </div>
+            </fieldset>
+        </div>
+        
         <!-- Extra fields -->
         <div><p>Add personal trainers, classes, and extra amenities on your profile page!.</p></div>
       
