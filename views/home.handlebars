@@ -1,6 +1,5 @@
 <!-- Home page: includes 'Sign up as user' and 'Sign up as gym' buttons, 
     as well as a link: 'Already have an account? Sign In!' -->
-
 <title>Strength4You HomePage</title>
 
 <main class="home-background">
@@ -27,6 +26,22 @@
 
         <!-- Display for Authenticated Users -->
         {{#if user}}
+            <!-- Stylish Go to Profile Button -->
+            <div style="position: absolute; top: 10px; right: 10px;">
+                <a href="/profile" style="
+                    display: inline-block;
+                    padding: 10px 20px;
+                    background-color: #007BFF;
+                    color: white;
+                    text-decoration: none;
+                    border-radius: 8px;
+                    font-size: 1em;
+                    font-weight: bold;
+                    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+                    transition: background-color 0.3s ease;">
+                    Go to Profile
+                </a>
+            </div>
             <div id="signedInOptions">
                 <h2 style="font-size: 2em; color: #333;">You are already signed in!</h2>
                 <a href="/home/search" id="searchMenuButton" style="font-size: 1.5em; display: inline-block; margin-top: 10px;">
