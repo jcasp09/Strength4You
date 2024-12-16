@@ -24,7 +24,7 @@ router
               res.status(500).render('error', {error: 'Could not add gym'})
             }
             else {
-              res.status(200).render('signin')
+              res.status(200).render('signingym')
             }
         } catch (e) {
             res.status(400).render('error', {error: e})

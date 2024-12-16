@@ -35,7 +35,8 @@ app.use(session({
 
 // Call middleware (ex: app.use('/signinuser', mw.signInRedirect) )
 app.use(mw.rootRedirect)
-app.use('/signin', mw.signInRedirect)
+app.use('/users/signin', mw.signInRedirect)
+app.use('/gyms/signin', mw.signInRedirect)
 app.use('/users/signup', mw.signUpRedirect)
 app.use('/gyms/signup', mw.signUpRedirect)
 app.use('/signout', mw.signOut)
