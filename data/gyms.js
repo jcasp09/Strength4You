@@ -12,7 +12,7 @@ const duplicateGymCheck = async (userId) => {
 }
 
 // Create gym
-export const createGym = async (name, userId, password, email, address, hours) => {
+export const createGym = async (name, userId, password, email, address, hours, role) => {
     // Server-side validation
     name = validation.checkString(name)
     userId = validation.checkUser(userId);
@@ -41,6 +41,7 @@ export const createGym = async (name, userId, password, email, address, hours) =
         email,
         address,
         hours,
+        role,
         equipment,
         classes,
         trainers,
@@ -61,6 +62,27 @@ export const createGym = async (name, userId, password, email, address, hours) =
 
     return insertInfo;
 }
+
+
+export const signInGym = async (userId, password) => {
+    // Validate userID and password
+    userId = validation.checkUser(userId, 'user ID')
+    password = validation.checkPassword(password, 'password')
+  
+    // Query the db for user
+    const gymCollection = await gyms()
+    const gym = await gymCollection.findOne({userId: userId})
+    if (!gym) throw `Error: either the userId or password is invalid.`
+  
+    // Compare passwords
+    let compare = await bcrypt.compare(password, gym.password)
+    if (!compare) throw `Error: either the userId or password is invalid.`
+  
+    // Return user fields... without passsword!
+    delete gym.password
+    return gym
+  };
+  
 
 // Get gym by id
 export const getGymById = async (id) => {
@@ -116,9 +138,9 @@ export const updateGym = async (id, gymObject) => {
 }
 
 // Delete gym
-export const deleteGym = async (gymID) => {
+export const deleteGym = async (id) => {
     id = validation.checkId(id);
-    const gymsCollection = await gym();
+    const gymsCollection = await gyms();
     const deletionInfo = await gymsCollection.findOneAndDelete({
         _id: new ObjectId(id)
     });

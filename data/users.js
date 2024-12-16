@@ -2,7 +2,7 @@ import { ObjectId } from 'mongodb'; // object id validation
 import bcrypt from 'bcryptjs'; // for hashing passwords
 import { users } from '../config/mongoCollections.js'; // user collection from database
 import validation from '../validation.js'
-const saltRound = 10
+const saltRounds = 10
 
 
 // Throws error if userId is already in the database
@@ -48,6 +48,28 @@ export const createUser = async (firstName, lastName, userId, password, email, d
   // User successfully added to db
   return true
 }
+
+
+export const signInUser = async (userId, password) => {
+  // Validate userID and password
+  userId = validation.checkUser(userId, 'user ID')
+  password = validation.checkPassword(password, 'password')
+
+  // Query the db for user
+  const userCollection = await users()
+  const user = await userCollection.findOne({userId: userId})
+  if (!user) throw `Error: either the userId or password is invalid.`
+
+  // Compare passwords
+  let compare = await bcrypt.compare(password, user.password)
+  if (!compare) throw `Error: either the userId or password is invalid.`
+
+  // Return user fields... without passsword!
+  delete user.password
+  return user
+};
+
+
 
 // get a user by id
 export const getUserById = async (userId) => {
