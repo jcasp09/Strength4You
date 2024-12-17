@@ -1,0 +1,20 @@
+<title>{{gym.name}} - Info</title>
+
+<main class="gym-info">
+    <h1>{{gym.name}}</h1>
+    <p><strong>Address:</strong> {{gym.address}}</p>
+    <p><strong>Email:</strong> {{gym.email}}</p>
+    <p><strong>Hours:</strong></p>
+    <ul>
+        {{#each gym.hours}}
+            <li>{{@key}}: {{this}}</li>
+        {{/each}}
+    </ul>
+    <p><strong>Equipment:</strong> {{#each gym.equipment}} {{this}}, {{/each}}</p>
+    <p><strong>Classes:</strong> {{#each gym.classes}} {{this}}, {{/each}}</p>
+    <p><strong>Trainers:</strong> {{#each gym.trainers}} {{this}}, {{/each}}</p>
+    <p><strong>Rating:</strong> {{gym.rating}} / 5</p>
+    <p><strong>Extra Amenities:</strong> {{#each gym.extra}} {{this}}, {{/each}}</p>
+
+    <a href="/home" style="text-decoration: none; color: #007BFF;">Back to Home</a>
+</main>

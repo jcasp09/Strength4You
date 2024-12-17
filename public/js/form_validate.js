@@ -486,60 +486,90 @@ $('.edit-btn').on('click', function (event) {
 
 // Event Handler: Gym Search Form, validate fields and search
 $('#gymSearchForm').submit(function (event) {
-    event.preventDefault()
+    event.preventDefault();
+
     // Hide errors
-    $('#gymNameError').hide()
-    $('#gymAddressError').hide()
-    let name = $('#nameSearchTerm').val().trim()
-    let address = $('#addressSearchTerm').val().trim()
+    $('#gymNameError').hide();
+    $('#gymAddressError').hide();
 
+    // Get and validate input fields
+    let name = $('#nameSearchTerm').val().trim();
+    let address = $('#addressSearchTerm').val().trim();
 
+    $('#searchResults').empty().hide(); // Clear old results
 
-    $('#searchResults').empty().hide()
-
-    let validForm = true
+    let validForm = true;
 
     // Validate Gym Name
     try {
-         if (name) checkString(name, 'Gym Name')
+        if (name) checkString(name, 'Gym Name');
     } catch (e) {
-        validForm = false
-        if (name) {
-            $('#gymNameError').text(e).show()
-        }
+        validForm = false;
+        $('#gymNameError').text(e).show();
         $('#nameSearchTerm').val('').focus();
     }
 
-    let searchObj = {}
+    let searchObj = {};
+    if (name) searchObj.name = name;
+    if (address) searchObj.address = address; // Address is optional but valid
 
-    if (name) searchObj.name = name
-    if (address) searchObj.address = address // address search is always valid
-
-
+    if (!validForm) return;
 
     // Prepare Ajax request
     let requestConfig = {
         method: 'POST',
-        url: '/api/search', // API endpoint
-        contentType: 'application/json', // Specify the content type as JSON
+        url: '/api/search', // Your API endpoint for searching gyms
+        contentType: 'application/json',
         data: JSON.stringify(searchObj),
     };
 
-    
     // Send Ajax request
-    $.ajax(requestConfig).then(function (responseMessage) {
+    $.ajax(requestConfig)
+        .then(function (responseMessage) {
             if (responseMessage.length === 0) {
-                // Handle no results
-                $('#searchResults').append('<p>No gyms found matching your search.</p>').show();
+                $('#searchResults')
+                    .append('<p>No gyms found matching your search.</p>')
+                    .show();
                 return;
             }
 
-            // Display search results
+            // Dynamically display search results with clickable links
             responseMessage.forEach((gym) => {
                 $('#searchResults').append(
-                    `<li><h3><a href='/profile/gym/${gym._id}'>${gym.name}</a></h3></li>`
+                    `<li>
+                        <h3>
+                            <a href="#" class="gym-link" data-id="${gym._id}" style="color: #007BFF; text-decoration: none;">
+                                ${gym.name}
+                            </a>
+                        </h3>
+                        <p><strong>Address:</strong> ${gym.address}</p>
+                        <p><strong>Hours:</strong> ${formatHours(gym.hours)}</p>
+                    </li>`
                 );
             });
+
             $('#searchResults').show();
-    })
-})
+        })
+        .catch(function (error) {
+            console.error(error);
+            $('#searchResults').append('<p>Error fetching search results.</p>').show();
+        });
+});
+
+// Helper function to format hours nicely
+function formatHours(hours) {
+    let formatted = '';
+    for (let day in hours) {
+        formatted += `${day}: ${hours[day]}<br>`;
+    }
+    return formatted;
+}
+
+// Event delegation to handle dynamic links
+$(document).on('click', '.gym-link', function (event) {
+    event.preventDefault(); // Prevent default link behavior
+    const gymId = $(this).data('id'); // Retrieve the gym ID from the data attribute
+
+    // Redirect to the gym info page dynamically
+    window.location.href = `/profile/gym/${gymId}`;
+});
