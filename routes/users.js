@@ -100,7 +100,9 @@ router.patch('/:id', async (req, res) => {
       throw new Error('Invalid ObjectId');
     }
     const updatedUser = await userData.updateUser(id, updatedData);
-    return res.status(200).json(updatedUser);
+    delete updatedUser.password
+    req.session.user = updatedUser
+    return res.status(200).redirect('/profile/user')
   } catch (error) {
     return res.status(400).json({ error: error.message });
   }

@@ -19,7 +19,7 @@ export const createUser = async (firstName, lastName, userId, password, email, d
   userId = validation.checkUser(userId)
   password = validation.checkPassword(password)
   email = validation.checkEmail(email)
-  dob = validation.checkDOB(dob)
+  validation.checkDOB(dob)
   city = validation.checkString(city, "City")
   state = validation.checkState(state);
 
@@ -35,7 +35,8 @@ export const createUser = async (firstName, lastName, userId, password, email, d
       email,
       dob,
       city,
-      state
+      state,
+      role: "user"
   };
 
   const userCollection = await users();
@@ -71,9 +72,9 @@ export const signInUser = async (userId, password) => {
 
 
 // get a user by id
-export const getUserById = async (userId) => {
+export const getUserById = async (id) => {
   const userCollection = await users();
-  const user = await userCollection.findOne({ _id: new ObjectId(userId) });
+  const user = await userCollection.findOne({ _id: new ObjectId(id) });
   if (!user) return null; // Return null if user not found
 
   user._id = user._id.toString(); // Convert _id to string before returning
@@ -81,10 +82,39 @@ export const getUserById = async (userId) => {
 }
 
 // update user information
-export const updateUser = async (userId, updatedData) => {
+export const updateUser = async (id, updatedData) => {
+  if (updatedData.firstName)
+    updatedData.firstName = validation.checkName(updatedData.firstName, "First Name");
+  if (updatedData.lastName)
+    updatedData.lastName = validation.checkName(updatedData.lastName, "Last Name");
+  if (updatedData.userId)
+    updatedData.userId = validation.checkUser(updatedData.userId);
+  if (updatedData.password)
+    updatedData.password = validation.checkPassword(updatedData.password);
+  if (updatedData.email)
+    updatedData.email = validation.checkEmail(updatedData.email);
+  if (updatedData.dob)
+    updatedData.dob = validation.checkDOB(updatedData.dob);
+  if (updatedData.city)
+    updatedData.city = validation.checkString(updatedData.city, "City");
+  if (updatedData.state)
+    updatedData.state = validation.checkState(updatedData.state);
+
+  duplicateUserCheck(updatedData.userId);
+
+  let oldUser = getUserById(id);
+
+  if (!oldUser)
+    throw `User Not Found with ${id}`
+
+  if (!await bcrypt.compare(oldPassword, oldUser.password))
+    throw `Old Password is incorrect`
+
+  updatedData.password = await bcrypt.hash(updatedData.password, saltRounds);
+
   const userCollection = await users();
   const updatedUser = await userCollection.findOneAndUpdate(
-    { _id: new ObjectId(userId) },
+    { _id: new ObjectId(id) },
     { $set: updatedData },
     { returnDocument: 'after' }
   );
