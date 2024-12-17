@@ -20,7 +20,7 @@
     <ul style="list-style-type: disc; padding-left: 20px;">
         {{#if gym.equipment.length}}
             {{#each gym.equipment}}
-                <li>{{this}}</li>
+                <li>{{this.type}}</li>
             {{/each}}
         {{else}}
             <li>No equipment listed.</li>
@@ -32,7 +32,10 @@
     <ul style="list-style-type: disc; padding-left: 20px;">
         {{#if gym.classes.length}}
             {{#each gym.classes}}
-                <li>{{this}}</li>
+                <li>
+                    {{this.name}}
+                    {{this.description}}
+                </li>
             {{/each}}
         {{else}}
             <li>No classes available.</li>
@@ -74,7 +77,7 @@
                 <li style="margin-bottom: 10px; border-bottom: 1px solid #ddd; padding-bottom: 10px;">
                     <strong>User:</strong> {{this.userId}} <br>
                     <strong>Rating:</strong> {{this.rating}} / 5 <br>
-                    <strong>Comment:</strong> {{this.comment}} <br>
+                    <strong>Comment:</strong> {{this.msg}} <br>
                     <em>Posted on: {{this.createdAt}}</em>
                 </li>
             {{/each}}

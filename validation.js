@@ -149,18 +149,24 @@ const exportedMethods = {
 
     checkClasses(classes) {
         this.checkArray(classes);
-        return classes.map((c) => {
+        let result = classes.map((c) => {
             this.checkObject(c);
             if (Object.keys(c).length !== 2)
-                throw `Machine is not valid in equipment`
-            c.name = this.checkString(c.name, "Class Name")
+                throw `Class is not valid`;
+            
+            c.name = this.checkString(c.name, "Class Name");
             if (c.name.length < 2 || c.name.length > 25)
-            throw `Class Name needs to be at least 2 characters long and must not exceed 25 characters`
-            c.description = this.checkString(c.description, "Class Description")
-            if (c.description < 50 ||c.description.length > 500)
-                throw `Class Description must be at least 50 characters and must not exceed 500 characters`
-        })
+                throw `Class Name needs to be at least 2 characters long and must not exceed 25 characters`;
+    
+            c.description = this.checkString(c.description, "Class Description");
+            if (c.description.length < 10 || c.description.length > 500)
+                throw `Class Description must be at least 50 characters and must not exceed 500 characters`;
+    
+            return c;
+        });
+        return result;
     },
+    
 
     checkLink(link) {
         link = this.checkString(link, "Link");

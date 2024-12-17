@@ -177,10 +177,10 @@ const main = async () => {
 
         // Add Comments to Gyms
         console.log('Adding comments for gyms...');
-        await gyms.addComment(planetFitness._id, aidan.userId, 'What are the peak hours for this gym?');
-        await gyms.addComment(crunchFitness._id, trevin.userId, 'Do they offer yoga classes here?');
-        await gyms.addComment(planetFitness._id, vincent.userId, 'Is there a discount for new members?');
-        await gyms.addComment(crunchFitness._id, emily.userId, 'Does this gym have a swimming pool?');
+        await gyms.addComment(planetFitness._id, aidan.userId, 3, 'What are the peak hours for this gym?');
+        await gyms.addComment(crunchFitness._id, trevin.userId, 4, 'Do they offer yoga classes here?');
+        await gyms.addComment(planetFitness._id, vincent.userId, 2, 'Is there a discount for new members?');
+        await gyms.addComment(crunchFitness._id, emily.userId, 1, 'Does this gym have a swimming pool?');
         console.log('Comments added successfully.');
 
     } catch (error) {
