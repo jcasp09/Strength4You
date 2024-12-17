@@ -1,5 +1,6 @@
 // Client-Side form validation
 
+
 // Validation funcitons needed: 
 function checkName(name, varName) {
     name = checkString(name, varName)
@@ -481,3 +482,64 @@ $('.edit-btn').on('click', function (event) {
         $(this).text('Edit');
     }
 });
+
+
+// Event Handler: Gym Search Form, validate fields and search
+$('#gymSearchForm').submit(function (event) {
+    event.preventDefault()
+    // Hide errors
+    $('#gymNameError').hide()
+    $('#gymAddressError').hide()
+    let name = $('#nameSearchTerm').val().trim()
+    let address = $('#addressSearchTerm').val().trim()
+
+
+
+    $('#searchResults').empty().hide()
+
+    let validForm = true
+
+    // Validate Gym Name
+    try {
+         if (name) checkString(name, 'Gym Name')
+    } catch (e) {
+        validForm = false
+        if (name) {
+            $('#gymNameError').text(e).show()
+        }
+        $('#nameSearchTerm').val('').focus();
+    }
+
+    let searchObj = {}
+
+    if (name) searchObj.name = name
+    if (address) searchObj.address = address // address search is always valid
+
+
+
+    // Prepare Ajax request
+    let requestConfig = {
+        method: 'POST',
+        url: '/api/search', // API endpoint
+        contentType: 'application/json', // Specify the content type as JSON
+        data: JSON.stringify(searchObj),
+    };
+
+    
+    // Send Ajax request
+    $.ajax(requestConfig).then(function (responseMessage) {
+            if (responseMessage.length === 0) {
+                // Handle no results
+                $('#searchResults').append('<p>No gyms found matching your search.</p>').show();
+                return;
+            }
+
+            // Display search results
+            responseMessage.forEach((gym) => {
+                $('#searchResults').append(
+                    `<li><h3><a href='/profile/gym/${gym._id}'>${gym.name}</a></h3></li>`
+                );
+            });
+            $('#searchResults').show();
+    })
+})

@@ -2,8 +2,6 @@ import {Router} from 'express'
 const router = Router()
 
 
-
-
 router.route('/').get(async (req, res) => {
   // rootRedirect middleware restricts access to this route 
   return res.json({error: 'YOU SHOULD NOT BE HERE!'})
