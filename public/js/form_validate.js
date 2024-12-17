@@ -477,21 +477,11 @@ $('.edit-btn').on('click', function (event) {
     if (targetInput.prop('disabled')) {
         if (targetId === "dob")
             targetInput.attr("type", "date")
-        if (targetId === "hours") {
-            $('#hoursFields input').each(function () {
-                $(this).prop('disabled', false);
-            });
-        }
         targetInput.prop('disabled', false).focus();
         $(this).text('Reset');
     } else {
         if (targetId === "dob")
             targetInput.attr("type", "text")
-        if (targetId === "hours") {
-            $('#hoursFields input').each(function () {
-                $(this).prop('disabled', true);
-            });
-        }
         targetInput.prop('disabled', true);
         targetInput.val('')
         $(this).text('Edit');
@@ -610,3 +600,122 @@ $(document).on('click', '.gym-link', function (event) {
     // Redirect to the gym info page dynamically
     window.location.href = `/profile/gym/${gymId}`;
 });
+
+$('#updateGym').submit((event) => {
+    event.preventDefault();
+    $('.error').hide()
+
+    let validForm = true;
+
+    if ($('#name').val())
+        try {
+            checkString($('#name').val(), "Name")
+        } catch (e) {
+            validForm = false;
+            $('#nameError').text(e).show()
+        }
+    
+    if ($('#userId').val())
+        try {
+            checkUser($('#userId').val())
+        } catch (e) {
+            validForm = false;
+            $('#userIdError').text(e).show()
+        }
+    
+    if ($('#userId').val())
+        try {
+            checkUser($('#userId').val())
+        } catch (e) {
+            validForm = false;
+            $('#userIdError').text(e).show()
+        }
+    
+    if ($('#oldPassword').val())
+        try {
+            if (!$('#password').val())
+                throw `Supply a new password`
+            else
+                checkPassword($('#password').val())
+            if ($('#oldPassword').val() === $('#password').val())
+                throw `New password cannot be the same as the old password!`
+        } catch (e) {
+            validForm = false;
+            $('#userIdError').text(e).show()
+        }
+    
+    if ($('#email').val())
+        try {
+            checkEmail($('#email').val())
+        } catch (e) {
+            validForm = false;
+            $('#emailError').text(e).show()
+        }
+    if ($('#address').val())
+        try {
+            checkString($('#address').val(), "Address")
+        } catch (e) {
+            validForm = false;
+            $('#addressError').text(e).show()
+        }
+    
+    if ($('#state').val())
+        try {
+            checkState($('#state').val())
+        } catch (e) {
+            validForm = false;
+            $('#stateError').text(e).show()
+        }
+    // Validate Monday Hours
+    try {
+        checkDay($('#monday').val(), 'Monday')
+    } catch (e) {
+        validForm = false
+        $('#monError').text(e).show()
+    }
+    // Validate Monday Hours
+    try {
+        checkDay($('#tuesday').val(), 'Tuesday')
+    } catch (e) {
+        validForm = false
+        $('#tueError').text(e).show()
+    }
+    // Validate Wednesday Hours
+    try {
+        checkDay($('#wednesday').val(), 'Wednesday')
+    } catch (e) {
+        validForm = false
+        $('#wedError').text(e).show()
+    }
+    // Validate Thursday Hours
+    try {
+        checkDay($('#thursday').val(), 'Thursday')
+    } catch (e) {
+        validForm = false
+        $('#thuError').text(e).show()
+    }
+    // Validate Friday Hours
+    try {
+        checkDay($('#friday').val(), 'Friday')
+    } catch (e) {
+        validForm = false
+        $('#friError').text(e).show()
+    }
+    // Validate Saturday Hours
+    try {
+        checkDay($('#saturday').val(), 'Saturday')
+    } catch (e) {
+        validForm = false
+        $('#satError').text(e).show()
+    }
+    // Validate Sunday Hours
+    try {
+        checkDay($('#sunday').val(), 'Sunday')
+    } catch (e) {
+        validForm = false
+        $('#sunError').text(e).show()
+    }
+
+    if (validForm)
+        event.target.submit();
+})

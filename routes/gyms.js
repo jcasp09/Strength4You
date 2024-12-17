@@ -91,15 +91,10 @@ router.get('/:id', async (req, res) => {
 // Update a gym profile using objectId
 router.patch('update/:id', async (req, res) => {
   const { id } = req.params; 
-  const { name, email, address, hours } = req.body;
-
+  const updatedFields = req.body;
   try {
-    const validatedId = validation.checkId(id, 'Gym ID');
-    const updatedFields = {};
-
     if (Object.keys(updatedFields).length === 0) throw 'No valid fields to update'; 
-
-    const updatedGym = await gymData.updateGym(validatedId, updatedFields); // Update gym data
+    const updatedGym = await gymData.updateGym(id, updatedFields); // Update gym data
     return res.status(200).render('gymprofile', { gym: updatedGym }); // Render updated gym profile page
   } catch (e) {
     return res.status(400).render('error', { error: e });

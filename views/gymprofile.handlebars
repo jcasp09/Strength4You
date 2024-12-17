@@ -3,14 +3,14 @@
 <main class="userProfile">
     <a href="/home">Go Back to Home</a>
     <h1>Gym Profile</h1>
-    <form action="/gyms/update/{{_id}}" method="POST" id="updateUser">
+    <form action="/gyms/update/{{_id}}" method="POST" id="updateGym">
         <label for="inputFields">Change Profile</label>
         <div class="inputFields">
             <!-- name -->
             <div class="field-row">
                 <label for="name" class="label">Gym Name</label>
                 <button type="button" class="edit-btn" data-target="name">Edit</button>
-                <input type="text" name="firstName" id="firstName" placeholder="{{firstName}}" disabled>
+                <input type="text" name="name" id="name" placeholder="{{firstName}}" disabled>
             </div>
 
             <!-- User ID -->
@@ -55,37 +55,37 @@
 
                 <div>
                     <label for="monday">Monday:</label>
-                    <input type="text" id="monday" name="monday" placeholder="{{Hours.Mon}}" disabled>
+                    <input type="text" id="monday" name="monday" placeholder="{{Hours.Mon}}">
                     <p class="error" id="monError" hidden></p>
                 </div>
                 <div>
                     <label for="tuesday">Tuesday:</label>
-                    <input type="text" id="tuesday" name="tuesday" placeholder="{{Hours.Tue}}" disabled>
+                    <input type="text" id="tuesday" name="tuesday" placeholder="{{Hours.Tue}}">
                     <p class="error" id="tueError" hidden></p>
                 </div>
                 <div>
                     <label for="wednesday">Wednesday:</label>
-                    <input type="text" id="wednesday" name="wednesday" placeholder="{{Hours.Wed}}" disabled>
+                    <input type="text" id="wednesday" name="wednesday" placeholder="{{Hours.Wed}}">
                     <p class="error" id="wedError" hidden></p>
                 </div>
                 <div>
                     <label for="thursday">Thursday:</label>
-                    <input type="text" id="thursday" name="thursday" placeholder="{{Hours.Thu}}" disabled>
+                    <input type="text" id="thursday" name="thursday" placeholder="{{Hours.Thu}}">
                     <p class="error" id="thuError" hidden></p>
                 </div>
                 <div>
                     <label for="friday">Friday:</label>
-                    <input type="text" id="friday" name="friday" placeholder="{{Hours.Fri}}" disabled>
+                    <input type="text" id="friday" name="friday" placeholder="{{Hours.Fri}}">
                     <p class="error" id="friError" hidden></p>
                 </div>
                 <div>
                     <label for="saturday">Saturday:</label>
-                    <input type="text" id="saturday" name="saturday" placeholder="{{Hours.Sat}}" disabled>
+                    <input type="text" id="saturday" name="saturday" placeholder="{{Hours.Sat}}">
                     <p class="error" id="satError" hidden></p>
                 </div>
                 <div>
                     <label for="sunday">Sunday:</label>
-                    <input type="text" id="sunday" name="sunday" placeholder="{{Hours.Sub}}" disabled>
+                    <input type="text" id="sunday" name="sunday" placeholder="{{Hours.Sub}}">
                     <p class="error" id="sunError" hidden></p>
                 </div>
             </fieldset>
@@ -119,6 +119,6 @@
         </div>
 
         <!-- Save Changes Button -->
-        <button type="submit">Save Changes</button>
+        {{!-- <button type="submit">Save Changes</button> --}}
     </form>
 </main>
