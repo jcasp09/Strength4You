@@ -541,7 +541,7 @@ $('#gymSearchForm').submit(function (event) {
             // Dynamically display search results with clickable links
             responseMessage.forEach((gym) => {
                 $('#searchResults').append(
-                    `<li><h3><a href=  data-id="${gym._id}" >${gym.name}</a></h3></li>`
+                    `<li><h3><a href='/profile/gym/${gym._id}'>${gym.name}</a></h3></li>`
                 );
             });
 
