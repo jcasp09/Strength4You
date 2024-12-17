@@ -489,23 +489,25 @@ $('#gymSearchForm').submit(function (event) {
     event.preventDefault();
 
     // Hide errors
-    $('#gymNameError').hide();
-    $('#gymAddressError').hide();
+    $('#gymNameError').hide()
+    $('#gymAddressError').hide()
+    let name = $('#nameSearchTerm').val().trim()
+    let address = $('#addressSearchTerm').val().trim()
 
-    // Get and validate input fields
-    let name = $('#nameSearchTerm').val().trim();
-    let address = $('#addressSearchTerm').val().trim();
+
 
     $('#searchResults').empty().hide(); // Clear old results
 
-    let validForm = true;
+    let validForm = true
 
     // Validate Gym Name
     try {
-        if (name) checkString(name, 'Gym Name');
+         if (name) checkString(name, 'Gym Name')
     } catch (e) {
-        validForm = false;
-        $('#gymNameError').text(e).show();
+        validForm = false
+        if (name) {
+            $('#gymNameError').text(e).show()
+        }
         $('#nameSearchTerm').val('').focus();
     }
 
@@ -513,7 +515,10 @@ $('#gymSearchForm').submit(function (event) {
     if (name) searchObj.name = name;
     if (address) searchObj.address = address; // Address is optional but valid
 
-    if (!validForm) return;
+    if (name) searchObj.name = name
+    if (address) searchObj.address = address // address search is always valid
+
+
 
     // Prepare Ajax request
     let requestConfig = {

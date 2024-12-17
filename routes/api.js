@@ -16,18 +16,23 @@ router.route('/search').post(async (req, res) => {
         const gymCollection = await gyms();
         // Build dynamic query object
         const query = {};
-        for (const field in searchTerms) {
-            if (searchTerms[field]) {
-                // Check if field is address and handle it more specifically
-                if (field === 'address') {
-                    // Split the search term into words (tokens) and search for each
-                    const addressTokens = searchTerms[field].split(' ').map(token => token.trim()).filter(Boolean);
-                    query[field] = { $regex: addressTokens.join('.*'), $options: 'i' }; // This searches for "Hoboken" within the address
-                } else {
-                    // Apply case-insensitive partial match for other fields
-                    query[field] = { $regex: searchTerms[field], $options: 'i' };
-                }
-            }
+
+        // Handle equipment search
+        if (searchTerms.equipment) {
+            const equipmentType = searchTerms.equipment;
+            query['equipment'] = {
+                $elemMatch: { type: equipmentType } // Match gyms where equipment array contains an object with type = equipmentType
+            };
+        }
+
+        // Handle name and address search
+        if (searchTerms.name) {
+            const nameTokens = searchTerms.name.split(' ').map(token => token.trim()).filter(Boolean);
+            query['name'] = { $regex: nameTokens.join('.*'), $options: 'i' }; // Case-insensitive regex for name
+        }
+        if (searchTerms.address) {
+            const addressTokens = searchTerms.address.split(' ').map(token => token.trim()).filter(Boolean);
+            query['address'] = { $regex: addressTokens.join('.*'), $options: 'i' }; // Case-insensitive regex for address
         }
 
         // Search gyms in the collection using the dynamic query
