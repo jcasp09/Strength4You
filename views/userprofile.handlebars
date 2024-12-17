@@ -2,7 +2,7 @@
 
 <main class="userProfile">
     <h1>User Profile</h1>
-    <form action="/users" method="PATCH" id="signInUser">
+    <form action="/users" method="PATCH" id="updateUser">
         <label for="inputFields">Change Profile</label>
         <div class="inputFields">
             <!-- First Name -->
@@ -49,7 +49,7 @@
             <div class="field-row">
                 <label for="dob" class="label">Date of Birth</label>
                 <button type="button" class="edit-btn" data-target="dob">Edit</button>
-                <input type="dob" name="dob" id="dob" placeholder="{{dob}}" disabled>
+                <input type="text" name="dob" id="dob" placeholder="{{dob}}" disabled>
             </div>
 
             <!-- City -->
