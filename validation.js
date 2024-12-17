@@ -169,7 +169,7 @@ const exportedMethods = {
     },
 
     checkState(state) {
-        state = checkString(state, "State")
+        state = this.checkString(state, "State")
         const validStates = [
             'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA',
             'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD',

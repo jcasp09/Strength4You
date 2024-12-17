@@ -8,13 +8,24 @@ const saltRounds = 10
 // Throws error if userId is already in the database
 const duplicateUserCheck = async (userId) => {
   const userCollection = await users()
-  const user = await userCollection.findOne({userId: userId})
+  const user = await userCollection.findOne({userId})
   if (user) throw `Error: there is already a user with that user ID.`
 }
 
 // create new user
-export const createUser = async (firstName, lastName, userId, password, email, dob, city, state, role) => {
-  const hashedPassword = await bcrypt.hash(password, 10);
+export const createUser = async (firstName, lastName, userId, password, email, dob, city, state) => {
+  firstName = validation.checkName(firstName, "First Name")
+  lastName = validation.checkName(lastName, "Last Name")
+  userId = validation.checkUser(userId)
+  password = validation.checkPassword(password)
+  email = validation.checkEmail(email)
+  dob = validation.checkDOB(dob)
+  city = validation.checkString(city, "City")
+  state = validation.checkState(state);
+
+  duplicateUserCheck(userId)
+
+  const hashedPassword = await bcrypt.hash(password, saltRounds);
 
   const newUser = {
       firstName,
@@ -24,8 +35,7 @@ export const createUser = async (firstName, lastName, userId, password, email, d
       email,
       dob,
       city,
-      state,
-      role
+      state
   };
 
   const userCollection = await users();

@@ -1,10 +1,10 @@
 import { Router } from 'express';
 import { ObjectId } from 'mongodb';
 import * as userData from '../data/users.js';
-import validation from '../validation.js'
+import xss from 'xss'
+
 
 const router = Router();
-const key = 'admin'
 
 
 // /users/signup functionality
@@ -12,37 +12,32 @@ router
   .route('/signup')
   .get(async (req, res) => {
     // Render signup page
-    res.render('signupuser')
+    return res.render('signupuser')
   })
   .post(async (req, res) => {
-    // Render signin page
-    const {firstName, lastName, userId, password, adminKey, email, dob, city, state} = req.body;
-
-    // Invalid admin key: redirect to error page
-    if (adminKey && adminKey !== key) {
-      res.status(400).render('error', {error: 'Incorrect Admin password... We keep a tight ship around here mister!'})
-    }
-    let role
-    // adminKey is valid: admin
-    if (adminKey === key) {
-      role = 'admin'
-    }
-    // no adminKey entered: user
-    else {
-      role = 'user'
-    }
-
+    // Clean data (xss)
+    let firstName = xss(req.body.firstName)
+    let lastName = xss(req.body.lastName)
+    let userId = xss(req.body.userId)
+    let password = xss(req.body.password)
+    let email = xss(req.body.email)
+    let dob = xss(req.body.dob)
+    let city = xss(req.body.city)
+    let state = xss(req.body.state)
+    
+    
+    // Attempt to Sign Up as a user
     try {
-      const newUser = await userData.createUser(firstName, lastName, userId, password, email, dob, city, state, role);
+      const newUser = await userData.createUser(firstName, lastName, userId, password, email, dob, city, state);
       if (!newUser) {
-        res.status(500).render('error', {error: 'Could not add user'})
+        return res.status(500).render('error', {error: 'Could not add user'})
       }
+      // Render signin page
       else {
-        res.status(200).render('signinuser')
+        return res.status(200).render('signinuser')
       }
-
     } catch (e) {
-      res.status(400).render('error', {error: e})
+      return res.status(400).render('error', {error: e})
     }
 });
 
@@ -51,30 +46,27 @@ router
   .route('/signin')
   .get(async (req, res) => {
     // Render signup page
-    res.render('signinuser')
+    return res.render('signinuser')
   })
   .post(async (req, res) => {
-    // Validate req.body Sign In form fields: userId and password)
-    let userId, password
-    try {
-      userId = validation.checkUser(req.body.userId, 'User ID')
-    } catch (e) {
-      return res.status(400).render('signinuser', {error: e})
-    }
-    try {
-      password = validation.checkPassword(req.body.password, 'Password')
-    } catch (e) {
-      return res.status(400).render('signinuser', {error: e})
-    }
+    // Clean data (xss)
+    let userId = xss(req.body.userId)
+    let password = xss(req.body.password)
 
+    // Attempt to Sign In as a user
     try {
-      const user = await userData.signInUser(userId, password);
+      const user = await userData.signInUser(userId, password)
 
-      req.session.user = user
-      return res.status(200).redirect('/home')
-
+      if (!user) {
+        return res.status(500).render('error', {error: 'Could not sign in user'})
+      }
+      // Create session / Render signin page
+      else {
+        req.session.user = user
+        return res.status(200).render('search')
+      }
     } catch (e) {
-      res.status(400).render('error', {error: e})
+      return res.status(400).render('error', {error: e})
     }
 });
 
@@ -91,9 +83,9 @@ router.get('/:id', async (req, res) => {
       throw new Error('Invalid ObjectId');
     }
     const user = await userData.getUserById(id);
-    res.status(200).json(user);
+    return res.status(200).json(user);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    return res.status(400).json({ error: error.message });
   }
 });
 
@@ -108,9 +100,9 @@ router.patch('/:id', async (req, res) => {
       throw new Error('Invalid ObjectId');
     }
     const updatedUser = await userData.updateUser(id, updatedData);
-    res.status(200).json(updatedUser);
+    return res.status(200).json(updatedUser);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    return res.status(400).json({ error: error.message });
   }
 });
 
@@ -124,9 +116,9 @@ router.delete('/:id', async (req, res) => {
       throw new Error('Invalid ObjectId');
     }
     const result = await userData.deleteUser(id);
-    res.status(200).json(result);
+    return res.status(200).json(result);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    return res.status(400).json({ error: error.message });
   }
 });
 

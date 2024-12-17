@@ -376,3 +376,108 @@ $(document).ready(function () {
         `);
     }
 });
+
+$('#updateUser').submit((event) => {
+    event.preventDefault();
+    $('.error').hide()
+
+    let validForm = true;
+
+    if ($('#firstName').val())
+        try {
+            checkName($('#firstName').val(), "First Name")
+        } catch (e) {
+            validForm = false;
+            $('#firsNameError').text(e).show()
+        }
+
+    if ($('#lastName').val())
+        try {
+            checkName($('#lastName').val(), "Last Name")
+        } catch (e) {
+            validForm = false;
+            $('#lastNameError').text(e).show()
+        }
+    
+    if ($('#userId').val())
+        try {
+            checkUser($('#userId').val())
+        } catch (e) {
+            validForm = false;
+            $('#userIdError').text(e).show()
+        }
+    
+    if ($('#userId').val())
+        try {
+            checkUser($('#userId').val())
+        } catch (e) {
+            validForm = false;
+            $('#userIdError').text(e).show()
+        }
+    
+    if ($('#oldPassword').val())
+        try {
+            if (!$('#password').val())
+                throw `Supply a new password`
+            else
+                checkPassword($('#password').val())
+            if ($('#oldPassword').val() === $('#password').val())
+                throw `New password cannot be the same as the old password!`
+        } catch (e) {
+            validForm = false;
+            $('#userIdError').text(e).show()
+        }
+    
+    if ($('#email').val())
+        try {
+            checkEmail($('#email').val())
+        } catch (e) {
+            validForm = false;
+            $('#emailError').text(e).show()
+        }
+    if ($('#dob').val())
+        try {
+            checkDOB($('#dob').val())
+        } catch (e) {
+            validForm = false;
+            $('#dob').text(e).show()
+        }
+    if ($('#city').val())
+        try {
+            checkString($('#city').val(), "City")
+        } catch (e) {
+            validForm = false;
+            $('#cityError').text(e).show()
+        }
+    
+    if ($('#state').val())
+        try {
+            checkState($('#state').val())
+        } catch (e) {
+            validForm = false;
+            $('#stateError').text(e).show()
+        }
+    
+    if (validForm)
+        event.target.submit();
+})
+
+$('.edit-btn').on('click', function (event) {
+    event.preventDefault();
+    
+    let targetId = $(this).data('target');
+    let targetInput = $(`#${targetId}`);
+
+    if (targetInput.prop('disabled')) {
+        if (targetId === "dob")
+            targetInput.attr("type", "date")
+        targetInput.prop('disabled', false).focus();
+        $(this).text('Reset');
+    } else {
+        if (targetId === "dob")
+            targetInput.attr("type", "text")
+        targetInput.prop('disabled', true);
+        targetInput.val('')
+        $(this).text('Edit');
+    }
+});
