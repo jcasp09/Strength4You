@@ -1,43 +1,72 @@
 <!-- Main search page (only accessible if signed in, UI may change depending on session role: admin/user/gym) -->
 
 <title>Search Gyms</title>
+<link rel="stylesheet" href="/public/css/styles.css">
 
 <main>
-    <nav>
-        <a href="/home">Home</a>
-        <a href="/signout">Sign Out</a>
-        <a href="/profile">Profile</a>
+    <!-- Navigation Bar -->
+    <nav style="background-color: #007BFF; padding: 10px; text-align: center; color: white;">
+        <a href="/home" style="margin-right: 15px; color: white; text-decoration: none;">Home</a>
+        <a href="/profile/user" style="margin-right: 15px; color: white; text-decoration: none;">Profile</a>
+        <a href="/signout" style="color: white; text-decoration: none;">Sign Out</a>
     </nav>
-    <h1>Search for Gyms</h1>
 
-    <!-- Search Options -->
-    
-    <div>
-        <form id="gymSearchForm">
-            <!-- Name Search -->
-            <label for="nameSearchTerm">Enter Gym Name:</label>
-            <input type="text" id="nameSearchTerm" name="nameSearchTerm" placeholder="e.g., Gold's Gym, Planet Fitness">
-            <div id="gymNameError" hidden></div>
-            <!-- Address Search -->
-            <label for="addressSearchTerm">Enter Gym Address:</label>
-            <input type="text" id="addressSearchTerm" name="addressSearchTerm" placeholder="e.g., Hoboken, Jersey City">
-            <div id="gymAddressError" hidden></div>
-            <!-- Equipment Search -->
-            <label for="equipmentSearchTerm">Enter Gym Equipment:</label>
-            <input type="text" id="equipmentSearchTerm" name="equipmentSearchTerm" placeholder="e.g., treadmills, bench press">
-            <div id="gymEquipmentError" hidden></div>
-
-            <!-- Search Button-->
-            <button type="submit" class="gymSearchButton">Search</button>
-        </form>
-
-        <!-- Search Option Content (shown when needed) -->
-        <ul id="searchResults" hidden></ul>
-        <!-- Misc. Error -->
-        <div id="searchError" hidden></div>
-
+    <!-- Page Title -->
+    <div style="text-align: center; margin: 20px 0;">
+        <h1 style="color: #333; font-size: 2rem;">Find Your Perfect Gym</h1>
+        <p style="color: #555;">Search gyms by name, location, or equipment</p>
     </div>
 
+    <!-- Search Options Section -->
+    <div style="max-width: 600px; margin: auto; background-color: #f9f9f9; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+        <form id="gymSearchForm" style="display: flex; flex-direction: column; gap: 15px;">
+            
+            <!-- Name Search -->
+            <div>
+                <label for="nameSearchTerm" style="font-weight: bold;">Gym Name:</label>
+                <input type="text" id="nameSearchTerm" name="nameSearchTerm" placeholder="e.g., Gold's Gym" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 5px;">
+                <div id="gymNameError" style="color: red; font-size: 0.9em;" hidden></div>
+            </div>
 
-    <footer><p>&copy; 2024 Strength4You</p></footer>
+            <!-- Address Search -->
+            <div>
+                <label for="addressSearchTerm" style="font-weight: bold;">Location (Address or City):</label>
+                <input type="text" id="addressSearchTerm" name="addressSearchTerm" placeholder="e.g., Hoboken, NJ" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 5px;">
+                <div id="gymAddressError" style="color: red; font-size: 0.9em;" hidden></div>
+            </div>
+
+            <!-- Equipment Search -->
+            <div>
+                <label for="equipmentSearchTerm" style="font-weight: bold;">Equipment:</label>
+                <input type="text" id="equipmentSearchTerm" name="equipmentSearchTerm" placeholder="e.g., treadmills, bench press" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 5px;">
+                <div id="gymEquipmentError" style="color: red; font-size: 0.9em;" hidden></div>
+            </div>
+
+            <!-- Search Button -->
+            <button type="submit" class="gymSearchButton" style="
+                background-color: #007BFF;
+                color: white;
+                padding: 10px;
+                font-size: 1rem;
+                font-weight: bold;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                transition: background-color 0.3s;">
+                Search Gyms
+            </button>
+        </form>
+    </div>
+
+    <!-- Search Results -->
+    <section id="searchResultsContainer" style="max-width: 800px; margin: 30px auto; text-align: center;">
+        <h2 style="color: #007BFF; font-size: 1.5rem; margin-bottom: 15px;">Search Results</h2>
+        <ul id="searchResults" style="list-style: none; padding: 0;" hidden></ul>
+        <div id="searchError" style="color: red; margin-top: 10px;" hidden></div>
+    </section>
+
+    <!-- Footer -->
+    <footer style="text-align: center; margin-top: 20px; color: #777;">
+        <p>&copy; 2024 Strength4You</p>
+    </footer>
 </main>

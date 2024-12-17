@@ -1,6 +1,6 @@
 import {Router} from 'express'
 import * as userData from '../data/users.js'
-import * as gymData from '../data/gyms.js'
+import { getGymById } from '../data/gyms.js';
 const router = Router()
 
 
