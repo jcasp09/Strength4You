@@ -168,7 +168,7 @@ a:hover {
 }
 
 /* Center form fields */
-.inputFields {
+.signin-inputFields {
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -214,4 +214,93 @@ a:hover {
 .inputFields input:disabled {
     background-color: #e9ecef;
     cursor: not-allowed;
+}
+
+
+
+/* General Styling */
+.signin-background {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: url('/public/images/gymBackground.jpg') no-repeat center center;
+    background-size: cover;
+    color: #333;
+    font-family: Arial, sans-serif;
+}
+
+.signin-div {
+    background-color: rgba(255, 255, 255, 0.95);
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 30px 40px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+}
+
+.signin-h1 { 
+    margin-bottom: 20px;
+    color: #007BFF;
+    font-size: 1.8rem;
+}
+
+.signin-inputFields {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 400px;
+}
+
+.signin-label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.signin-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.signin-button {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+}
+
+.signin-button:hover {
+    background-color: #0056b3;
+}
+
+.error {
+    color: red;
+    font-size: 0.9rem;
+}
+
+/* Back to Home link styling */
+a {
+    display: inline-block;
+    margin-top: 15px;
+    color: #007BFF;
+    text-decoration: none;
+    font-size: 1rem;
+}
+
+a:hover {
+    text-decoration: underline;
 }

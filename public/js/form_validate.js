@@ -233,6 +233,11 @@ $('#gymSignUpForm').submit(async (event) => {
         $('#addressError').text(e).show()
     }
 
+    // Validate Age checkbox
+    if (!$('#age').is(':checked')) {
+        validForm = false
+        $('#ageError').text('You must confirm that you are above 13 years old').show()
+    }
 
     // Validate Monday Hours
     try {
@@ -325,7 +330,7 @@ $('#signInUser').submit((event) => {
 
 
  // Event Handler: submission of Gym Signin form
-$('#signInUser').submit((event) => {
+$('#signInGym').submit((event) => {
     event.preventDefault()
  
     let validForm = true
