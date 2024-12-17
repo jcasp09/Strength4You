@@ -67,6 +67,11 @@ const exportedMethods = {
             date.getFullYear() === today.getFullYear() && date.getMonth() > today.getMonth() ||
             date.getFullYear() === today.getFullYear() && date.getMonth() === today.getMonth() && date.getDate() > today.getDate())
             throw `Cannot set a dob in the future`
+        let cutoffDate = new Date();
+        cutoffDate.setFullYear(today.getFullYear() - 13);
+        if (date > cutoffDate) {
+            throw `User must be older than 13 years`;
+        }
     },
 
     checkId(id, varName) {
