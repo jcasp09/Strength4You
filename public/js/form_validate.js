@@ -493,30 +493,18 @@ $('#gymSearchForm').submit(function (event) {
     $('#gymAddressError').hide()
     let name = $('#nameSearchTerm').val().trim()
     let address = $('#addressSearchTerm').val().trim()
-
+    let equipment = $('#equipmentSearchTerm').val().trim()
 
 
     $('#searchResults').empty().hide(); // Clear old results
 
-    let validForm = true
 
-    // Validate Gym Name
-    try {
-         if (name) checkString(name, 'Gym Name')
-    } catch (e) {
-        validForm = false
-        if (name) {
-            $('#gymNameError').text(e).show()
-        }
-        $('#nameSearchTerm').val('').focus();
-    }
 
     let searchObj = {};
-    if (name) searchObj.name = name;
-    if (address) searchObj.address = address; // Address is optional but valid
 
     if (name) searchObj.name = name
-    if (address) searchObj.address = address // address search is always valid
+    if (address) searchObj.address = address
+    if (equipment) searchObj.equipment = equipment
 
 
 
