@@ -1,8 +1,9 @@
 <title>User Profile</title>
 
 <main class="userProfile">
+    <a href="/home">Go Back to Home</a>
     <h1>User Profile</h1>
-    <form action="/users/{{_id}}" method="PATCH" id="updateUser">
+    <form action="/users/update/{{_id}}" method="POST" id="updateUser">
         <label for="inputFields">Change Profile</label>
         <div class="inputFields">
             <!-- First Name -->

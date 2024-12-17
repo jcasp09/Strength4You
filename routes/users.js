@@ -85,17 +85,19 @@ router.get('/:id', async (req, res) => {
     const user = await userData.getUserById(id);
     return res.status(200).json(user);
   } catch (error) {
-    return res.status(400).json({ error: error.message });
+    return res.status(400).render('errer', { error: error });
   }
 });
 
 // Update a user by ID
-router.patch('/:id', async (req, res) => {
+router.patch('/update/:id', async (req, res) => {
   // User role must be user or admin, users can only update their own profile
-  const { id } = req.params;
+  const id = req.params.id;
   const updatedData = req.body;
 
   try {
+    // if (Object.keys(updatedData).length === 0)
+    //   throw `No fields `
     if (!ObjectId.isValid(id)) {
       throw new Error('Invalid ObjectId');
     }
@@ -103,8 +105,8 @@ router.patch('/:id', async (req, res) => {
     delete updatedUser.password
     req.session.user = updatedUser
     return res.status(200).redirect('/profile/user')
-  } catch (error) {
-    return res.status(400).json({ error: error.message });
+  } catch (e) {
+    return res.status(400).render('error', {error: e});
   }
 });
 

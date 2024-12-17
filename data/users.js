@@ -102,15 +102,15 @@ export const updateUser = async (id, updatedData) => {
 
   duplicateUserCheck(updatedData.userId);
 
-  let oldUser = getUserById(id);
+  let oldUser = await getUserById(id);
 
   if (!oldUser)
     throw `User Not Found with ${id}`
-
-  if (!await bcrypt.compare(oldPassword, oldUser.password))
-    throw `Old Password is incorrect`
-
-  updatedData.password = await bcrypt.hash(updatedData.password, saltRounds);
+  if (updatedData.oldPassword)
+    if (!await bcrypt.compare(updatedData.oldPassword, oldUser.password))
+      throw `Old Password is incorrect`
+  if (updatedData.password)
+    updatedData.password = await bcrypt.hash(updatedData.password, saltRounds);
 
   const userCollection = await users();
   const updatedUser = await userCollection.findOneAndUpdate(
@@ -118,7 +118,7 @@ export const updateUser = async (id, updatedData) => {
     { $set: updatedData },
     { returnDocument: 'after' }
   );
-  return updatedUser.value;
+  return updatedUser;
 }
 
 // delete user by id

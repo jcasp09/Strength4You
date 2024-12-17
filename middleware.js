@@ -76,4 +76,10 @@ export const applyMiddleware = (app) => {
     }
     next();
   });
+
+  app.use('/users/update/:id', (req, res, next) => {
+    if (req.method === "POST")
+      req.method = "PATCH"
+    next();
+  })
 };
