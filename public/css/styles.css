@@ -167,6 +167,21 @@ a:hover {
     color: #333;
 }
 
+/* Sign-In Page Background */
+.signin-background {
+    background: url('../images/signin-background.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #333; /* Default text color */
+    text-align: center;
+}
+
+
 /* Center form fields */
 .inputFields {
     display: flex;

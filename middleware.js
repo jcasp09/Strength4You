@@ -28,7 +28,7 @@ export const applyMiddleware = (app) => {
   // MW3: Sign-in Redirect
   app.use(['/users/signin', '/gyms/signin'], (req, res, next) => {
     if (req.session.user) {
-      return res.redirect('/home/search'); // Prevent access if already signed in
+      return res.redirect('/home'); // Prevent access if already signed in
     }
     next();
   });

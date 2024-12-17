@@ -1,6 +1,6 @@
 <!-- Sign up gym page (role = gym) -->
 
-<title>Sign up - Gym</title>
+<title>Sign Up - Gym</title>
 
 <main>
     <h1>Sign Up - Gym</h1>
@@ -16,10 +16,12 @@
                 <div> <label for="userId" class="label">User ID</label> </div>
                 <div> <input type="text" name="userId" id="userId"> </div>
                 <div class="error" id="userIdError" hidden></div>
+
                 <!-- Password -->
                 <div> <label for="password" class="label">Password</label> </div>
                 <div> <input type="password" name="password" id="password"> </div>
                 <div class="error" id="passwordError" hidden></div>
+
                 <!-- Confirm Password -->
                 <div> <label for="confirmPassword" class="label">Confirm Password</label> </div>
                 <div> <input type="password" name="confirmPassword" id="confirmPassword"> </div>
@@ -29,6 +31,7 @@
                 <div> <label for="email" class="label">Email</label> </div>
                 <div> <input type="email" name="email" id="email"> </div>
                 <div class="error" id="emailError" hidden></div>
+
                 <!-- Address -->
                 <div> <label for="address" class="label">Address</label> </div>
                 <div> <input type="text" name="address" id="address"> </div>
@@ -40,43 +43,36 @@
                 <legend>Enter Operating Hours</legend>
                 <p>Example: '8am-10pm' (hh[a/p]m-hh[a/p]m)</p>
 
-                <!-- Monday -->
                 <div>
                     <label for="monday">Monday:</label>
                     <input type="text" id="monday" name="monday" placeholder="Closed">
                     <p class="error" id="monError" hidden></p>
                 </div>
-                <!-- Tuesday -->
                 <div>
                     <label for="tuesday">Tuesday:</label>
                     <input type="text" id="tuesday" name="tuesday" placeholder="Closed">
                     <p class="error" id="tueError" hidden></p>
                 </div>
-                <!-- Wednesday -->
                 <div>
                     <label for="wednesday">Wednesday:</label>
                     <input type="text" id="wednesday" name="wednesday" placeholder="Closed">
                     <p class="error" id="wedError" hidden></p>
                 </div>
-                <!-- Thursday -->
                 <div>
                     <label for="thursday">Thursday:</label>
                     <input type="text" id="thursday" name="thursday" placeholder="Closed">
                     <p class="error" id="thuError" hidden></p>
                 </div>
-                <!-- Friday -->
                 <div>
                     <label for="friday">Friday:</label>
                     <input type="text" id="friday" name="friday" placeholder="Closed">
                     <p class="error" id="friError" hidden></p>
                 </div>
-                <!-- Saturday -->
                 <div>
                     <label for="saturday">Saturday:</label>
                     <input type="text" id="saturday" name="saturday" placeholder="Closed">
                     <p class="error" id="satError" hidden></p>
                 </div>
-                <!-- Sunday -->
                 <div>
                     <label for="sunday">Sunday:</label>
                     <input type="text" id="sunday" name="sunday" placeholder="Closed">
@@ -84,11 +80,29 @@
                 </div>
             </fieldset>
         </div>
-        
-        <!-- Extra fields -->
-        <div><p>Add personal trainers, classes, and extra amenities on your profile page!.</p></div>
-      
+
+        <!-- Extra Info -->
+        <div><p>Add personal trainers, classes, and extra amenities on your profile page!</p></div>
+
         <!-- Sign Up Button -->
         <button type="submit">Sign Up</button>
     </form>
+
+    <!-- Back to Home Button -->
+    <div style="text-align: center; margin-top: 20px;">
+        <a href="/home" style="
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+        ">
+            Back to Home
+        </a>
+    </div>
 </main>
