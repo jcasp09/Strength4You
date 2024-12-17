@@ -1,150 +1,63 @@
 <!-- Sign up user page (role = admin || user) -->
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up - User</title>
-    <style>
-        /* General Page Styling */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background-color: #f9f9f9;
-        }
+<title>Sign Up - User</title>
 
-        main {
-            background: #ffffff;
-            padding: 20px 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            max-width: 400px;
-            width: 100%;
-        }
+<main>
+    <h1>Sign Up - User</h1>
+    <form action="/users/signup" method="POST" id="userSignUpForm">
+        <div class="inputFields">
+            <!-- First Name -->
+            <div> <label for="firstName" class="label">First Name</label> </div>
+            <div> <input type="text" name="firstName" id="firstName"> </div>
+            <div class="error" id="firstNameError" hidden></div>
 
-        h1 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
+            <!-- Last Name -->
+            <div> <label for="lastName" class="label">Last Name</label> </div>
+            <div> <input type="text" name="lastName" id="lastName"> </div>
+            <div class="error" id="lastNameError" hidden></div>
 
-        .inputFields {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
+            <!-- User ID -->
+            <div> <label for="userId" class="label">User ID</label> </div>
+            <div> <input type="text" name="userId" id="userId"> </div>
+            <div class="error" id="userIdError" hidden></div>
 
-        .label {
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
+            <!-- Password -->
+            <div> <label for="password" class="label">Password</label> </div>
+            <div> <input type="password" name="password" id="password"> </div>
+            <div class="error" id="passwordError" hidden></div>
 
-        input {
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 14px;
-        }
+            <!-- Confirm Password -->
+            <div> <label for="confirmPassword" class="label">Confirm Password</label> </div>
+            <div> <input type="password" name="confirmPassword" id="confirmPassword"> </div>
+            <div class="error" id="confirmPasswordError" hidden></div>
 
-        .error {
-            color: red;
-            font-size: 12px;
-        }
+            <!-- Email -->
+            <div> <label for="email" class="label">Email</label> </div>
+            <div> <input type="email" name="email" id="email"> </div>
+            <div class="error" id="emailError" hidden></div>
 
-        /* Sign Up Button Styling */
-        button {
-            width: 100%;
-            padding: 10px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            margin-top: 20px;
-        }
+            <!-- Date of Birth -->
+            <div> <label for="dob" class="label">Date of birth</label> </div>
+            <div> <input type="date" name="dob" id="dob"> </div>
+            <div class="error" id="dobError" hidden></div>
 
-        button:hover {
-            background-color: #45a049;
-        }
+            <!-- City -->
+            <div> <label for="city" class="label">City</label> </div>
+            <div> <input type="text" name="city" id="city"> </div>
+            <div class="error" id="cityError" hidden></div>
 
-        /* Back to Home Styling */
-        .backLink {
-            display: block;
-            text-align: center;
-            margin-top: 15px;
-            font-size: 14px;
-            color: #007BFF;
-            text-decoration: none;
-        }
+            <!-- State -->
+            <div> <label for="state" class="label">State</label> </div>
+            <div> <input type="text" name="state" id="state"> </div>
+            <div class="error" id="stateError" hidden></div>
+        </div>
 
-        .backLink:hover {
-            text-decoration: underline;
-        }
-    </style>
-</head>
-<body>
-    <main>
-        <h1>Sign Up - User</h1>
-        <form action="/users/signup" method="POST" id="userSignUpForm">
-            <div class="inputFields">
-                <!-- First Name -->
-                <label for="firstName" class="label">First Name</label>
-                <input type="text" name="firstName" id="firstName">
-                <div class="error" id="firstNameError" hidden></div>
+        <!-- Sign Up Button -->
+        <button type="submit">Sign Up</button>
+    </form>
 
-                <!-- Last Name -->
-                <label for="lastName" class="label">Last Name</label>
-                <input type="text" name="lastName" id="lastName">
-                <div class="error" id="lastNameError" hidden></div>
-
-                <!-- User ID -->
-                <label for="userId" class="label">User ID</label>
-                <input type="text" name="userId" id="userId">
-                <div class="error" id="userIdError" hidden></div>
-
-                <!-- Password -->
-                <label for="password" class="label">Password</label>
-                <input type="password" name="password" id="password">
-                <div class="error" id="passwordError" hidden></div>
-
-                <!-- Confirm Password -->
-                <label for="confirmPassword" class="label">Confirm Password</label>
-                <input type="password" name="confirmPassword" id="confirmPassword">
-                <div class="error" id="confirmPasswordError" hidden></div>
-
-                <!-- Email -->
-                <label for="email" class="label">Email</label>
-                <input type="email" name="email" id="email">
-                <div class="error" id="emailError" hidden></div>
-
-                <!-- Date of Birth -->
-                <label for="dob" class="label">Date of Birth</label>
-                <input type="date" name="dob" id="dob">
-                <div class="error" id="dobError" hidden></div>
-
-                <!-- City -->
-                <label for="city" class="label">City</label>
-                <input type="text" name="city" id="city">
-                <div class="error" id="cityError" hidden></div>
-
-                <!-- State -->
-                <label for="state" class="label">State</label>
-                <input type="text" name="state" id="state">
-                <div class="error" id="stateError" hidden></div>
-            </div>
-
-            <!-- Sign Up Button -->
-            <button type="submit">Sign Up</button>
-        </form>
-
-        <!-- Back to Home Link -->
-        <a href="/" class="backLink">&#8592; Back to Home</a>
-    </main>
-</body>
-</html>
+    <!-- Back Button -->
+    <div style="margin-top: 20px;">
+        <a href="/" style="text-decoration: none; color: blue;">&#8592; Back to Home</a>
+    </div>
+</main>
