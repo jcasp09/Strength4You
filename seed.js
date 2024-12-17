@@ -175,6 +175,14 @@ const main = async () => {
         await gyms.addReview(crunchFitness._id, emily.userId, 2, 'Needs better hygiene in locker rooms.');
         console.log('Reviews added successfully.');
 
+        // Add Comments to Gyms
+        console.log('Adding comments for gyms...');
+        await gyms.addComment(planetFitness._id, aidan.userId, 'What are the peak hours for this gym?');
+        await gyms.addComment(crunchFitness._id, trevin.userId, 'Do they offer yoga classes here?');
+        await gyms.addComment(planetFitness._id, vincent.userId, 'Is there a discount for new members?');
+        await gyms.addComment(crunchFitness._id, emily.userId, 'Does this gym have a swimming pool?');
+        console.log('Comments added successfully.');
+
     } catch (error) {
         console.error('Error during database seeding:', error);
     } finally {

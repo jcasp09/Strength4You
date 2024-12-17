@@ -150,12 +150,12 @@ export const deleteGym = async (id) => {
     return {_id: id, deleted: true};
 }
 
-export const addReview = async (gymId, userId, rating, comment) => {
+export const addReview = async (gymId, userId, rating, msg) => {
     const gymsCollection = await gyms();
     const gym = await getGymById(gymId);
     if (!gym) throw 'Gym not found';
   
-    const review = { userId, rating, comment, createdAt: new Date() };
+    const review = { userId, rating, msg, createdAt: new Date() };
     await gymsCollection.updateOne(
       { _id: new ObjectId(gymId) },
       { $push: { reviews: review } }
@@ -163,3 +163,18 @@ export const addReview = async (gymId, userId, rating, comment) => {
   
     return review;
 };
+
+export const addComment = async (gymId, userId, rating, msg) => {
+    const gymsCollection = await gyms();
+    const gym = await getGymById(gymId);
+    if (!gym) throw 'Gym not found';
+  
+    const comment = { userId, rating, msg, createdAt: new Date() };
+    await gymsCollection.updateOne(
+      { _id: new ObjectId(gymId) },
+      { $push: { comments: comment } }
+    );
+  
+    return comment;
+};
+
