@@ -8,108 +8,162 @@ const main = async () => {
     console.log('Database cleared. Seeding data...');
 
     try {
-        // Seed Gyms
+        // Seed Gyms and add data
         console.log('Seeding gyms...');
         const planetFitness = await gyms.createGym(
             'Planet Fitness', 'pFitness1', 'iLoveGym1!',
             'location1@planetfitness.com', '605 Washington St, Hoboken, NJ.',
             { 'Mon': '08am-10pm', 'Tue': '08am-10pm', 'Wed': '08am-10pm',
-              'Thu': '08am-10pm', 'Fri': '08am-10pm', 'Sat': '08am-02pm', 'Sun': '08am-02pm' },
-            'gym',
-            ['Treadmills', 'Weights', 'StairMasters'],
-            ['Bodyweight Classes', 'Circuit Training'],
-            ['Mark Trainer - HIIT Specialist'],
-            ['Juice Bar', 'Locker Rooms'],
-            'https://www.planetfitness.com',
-            [],
-            4,
-            []
-        );
+              'Thu': '08am-10pm', 'Fri': '08am-10pm', 'Sat': '08am-02pm', 'Sun': '08am-02pm' }
+        )
+        await gyms.updateGym(planetFitness._id, 
+            {
+                'equipment': [ // Equipment
+                    { "type": "treadmill", "count": 5 },
+                    { "type": "weights", "count": 20 },
+                    { "type": "stair-climber", "count": 4 }
+                ], 
+                'classes': [ // Classes
+                    { "name": "Bodyweight Classes", "description": "Classes using your body weight for resistance." },
+                    { "name": "Circuit Training", "description": "High-intensity circuit training for full-body conditioning." }
+                ],
+                'extra': [ // Extra amenities
+                    'Juice Bar', 
+                    'Locker Rooms'
+                ],
+                'link': 'https://www.planetfitness.com'
+            }
+        )
+        
+     
         const crunchFitness = await gyms.createGym(
             'Crunch Fitness', 'cFitness1', 'workoutNow2!',
             'location1@crunchfitness.com', '113 River St, Hoboken, NJ.',
             { 'Mon': '10am-08pm', 'Tue': '10am-08pm', 'Wed': '10am-08pm', 
-              'Thu': '10am-08pm', 'Fri': '10am-08pm', 'Sat': 'Closed', 'Sun': 'Closed' },
-            'gym'
-        );
+              'Thu': '10am-08pm', 'Fri': '10am-08pm', 'Sat': 'Closed', 'Sun': 'Closed' }
+        )
+
+        await gyms.updateGym(crunchFitness._id, 
+            {
+                'equipment': [ // Equipment
+                    { "type": "bench press", "count": 3 },
+                    { "type": "lat pull down", "count": 4 }
+                ], 
+                'classes': [ // Classes
+                    { "name": "Zumba", "description": "A fun and energetic dance workout." },
+                    { "name": "Pilates", "description": "A low-impact workout focusing on core strength and flexibility." }
+                ],
+                'extra': [ // Extra amenities
+                    'Vending Machines',
+                    'Sauna'
+                ],
+                'link': 'https://www.crunch.com'
+            }
+        )
+
 
         const laFitness = await gyms.createGym(
             'LA Fitness', 'laFit123', 'StayStrong456!',
             'support@lafitness.com', '150 Sunset Blvd, Los Angeles, CA.',
             { 'Mon': '05am-10pm', 'Tue': '05am-10pm', 'Wed': '05am-10pm',
               'Thu': '05am-10pm', 'Fri': '05am-09pm', 'Sat': '07am-07pm', 'Sun': '07am-07pm' },
-            'gym',
-            ['Bench Press', 'Lat Pulldown Machines', 'Leg Press', 'Ellipticals'],
-            ['Zumba', 'Pilates', 'Body Pump'],
-            ['Carlos Diaz - Fitness Instructor', 'Sophia Wang - Yoga Trainer'],
-            ['Pool', 'Basketball Court', 'Juice Bar'],
-            'https://www.lafitness.com',
-            [{ userId: 'vincent123', rating: 3, comment: 'Decent gym but gets crowded.', createdAt: new Date() }],
-            3.5,
-            ['Good amenities, but the peak hours are busy.']
         );
-        
-        console.log('Gyms seeded successfully.');
+        await gyms.updateGym(laFitness._id, 
+            {
+                'equipment': [ // Equipment
+                    { "type": "bench press", "count": 4 },
+                    { "type": "lat pull down machine", "count": 3 }
+                ], 
+                'classes': [ // Classes
+                    { "name": "Zumba", "description": "A dance workout with great music." },
+                    { "name": "Body Pump", "description": "Full body workout using weights to tone muscles." }
+                ],
+                'extra': [ // Extra amenities
+                    'Juice Bar',
+                    'Basketball Court'
+                ],
+                'link': 'https://www.lafitness.com'
+            }
+        )
 
-        // Seed Admin Users
-        console.log('Seeding admin users...');
-        const jason = await users.createUser(
-            'Jason', 'Casper', 'jcasp09', 'myPassword1!',
-            'jcasper@stevens.edu', '2003-10-02', 'Jackson', 'New Jersey', 'admin'
-        );
-        const vincent = await users.createUser(
-            'Vincent', 'Cancelliere', 'vcool1015', 'iLove546!',
-            'vcancell@stevens.edu', '2003-10-15', 'Jackson', 'New Jersey', 'admin'
-        );
-        console.log('Admin users seeded successfully.');
 
-        // Seed Standard Users
-        console.log('Seeding standard users...');
-        const aidan = await users.createUser(
-            'Aidan', 'Cancelliere', 'T1GIT', 'fortniteFan15!',
-            'acancell@stevens.edu', '2003-10-15', 'Jackson', 'New Jersey', 'user'
-        );
-        const trevin = await users.createUser(
-            'Trevin', 'Rieger', 'srieger', 'callOfDuty0!',
-            'srieger@shu.edu', '2003-08-23', 'Jackson', 'New Jersey', 'user'
-        );
-        const emily = await users.createUser(
-            'Emily', 'Smith', 'emilyS123', 'superSafe1!',
-            'emily.smith@gmail.com', '1998-07-15', 'Boston', 'Massachusetts', 'user'
-        );
-        const matt = await users.createUser(
-            'Matt', 'Johnson', 'mattJ321', 'pass1234!',
-            'matt.j@gmail.com', '1995-01-10', 'Dallas', 'Texas', 'user'
-        );
         const equinox = await gyms.createGym(
             'Equinox', 'equinoxLuxury', 'LuxuryFit2024!',
             'contact@equinox.com', '300 Park Ave, New York, NY.',
             { 'Mon': '06am-11pm', 'Tue': '06am-11pm', 'Wed': '06am-11pm',
-              'Thu': '06am-11pm', 'Fri': '06am-10pm', 'Sat': '08am-06pm', 'Sun': '08am-06pm' },
-            'gym',
-            ['Treadmills', 'Ellipticals', 'Rowing Machines', 'Free Weights', 'Resistance Bands'],
-            ['Yoga', 'Spin', 'HIIT Training'],
-            ['John Doe - Certified Trainer', 'Jane Smith - Nutrition Specialist'],
-            ['Smoothie Bar', 'Sauna', 'Locker Rooms'],
-            'https://www.equinox.com',
-            [{ userId: 'aidan123', rating: 5, comment: 'Luxury experience with great trainers!', createdAt: new Date() }],
-            5,
-            ['Great staff and equipment!']
-        );
+              'Thu': '06am-11pm', 'Fri': '06am-10pm', 'Sat': '08am-06pm', 'Sun': '08am-06pm' }
+        )
+        await gyms.updateGym(equinox._id, 
+            {
+                'equipment': [ // Equipment
+                    { "type": "treadmills", "count": 4 },
+                    { "type": "rowing machines", "count": 5 }
+                ], 
+                'classes': [ // Classes
+                    { "name": "Yoga", "description": "Relaxing yoga classes for all levels." },
+                    { "name": "Spin", "description": "High-intensity cycling classes." }
+                ],
+                'extra': [ // Extra amenities
+                    'Smoothie Bar',
+                    'Sauna'
+                ],
+                'link': 'https://www.equinox.com'
+            }
+        )
+
+
         const anytimeFitness = await gyms.createGym(
             'Anytime Fitness', 'anytime247', 'AlwaysOpen123!',
             'info@anytimefitness.com', '200 Main St, Chicago, IL.',
             { 'Mon': '12am-12am', 'Tue': '12am-12am', 'Wed': '12am-12am',
               'Thu': '12am-12am', 'Fri': '12am-12am', 'Sat': '12am-12am', 'Sun': '12am-12am' },
-            'gym',
-            ['Treadmills', 'Dumbbells', 'Kettlebells', 'Squat Racks'],
-            ['Strength Training', 'Cardio'],
-            ['Mike Tyson - Strength Coach', 'Anna Lee - Personal Trainer'],
-            ['24/7 Access', 'Showers'],
-            'https://www.anytimefitness.com',
-            [{ userId: 'mattJ321', rating: 4, comment: 'Convenient and always open!', createdAt: new Date() }],
-            4,
-            ['Perfect for early risers and night owls.']
+        );
+        await gyms.updateGym(equinox._id, 
+            {
+                'equipment': [ // Equipment
+                    { "type": "treadmills", "count": 6 },
+                    { "type": "kettlebells", "count": 10 }
+                ], 
+                'classes': [ // Classes
+                    { "name": "Strength Training", "description": "Focus on building strength using free weights." },
+                    { "name": "Cardio", "description": "Cardio workouts to help with overall fitness." }
+                ],
+                'extra': [ // Extra amenities
+                    '24/7 Access',
+                    'Showers'
+                ],
+                'link': 'https://www.anytimefitness.com'
+            }
+        )
+        console.log('Gyms seeded successfully.');
+
+        
+
+        // Seed Users
+        console.log('Seeding users...');
+        const jason = await users.createUser(
+            'Jason', 'Casper', 'jcasp09', 'myPassword1!',
+            'jcasper@stevens.edu', '2003-10-02', 'Jackson', 'NJ'
+        );
+        const vincent = await users.createUser(
+            'Vincent', 'Cancelliere', 'vcool1015', 'iLove546!',
+            'vcancell@stevens.edu', '2003-10-15', 'Jackson', 'NJ'
+        );
+        const aidan = await users.createUser(
+            'Aidan', 'Cancelliere', 'T1GIT', 'fortniteFan15!',
+            'acancell@stevens.edu', '2003-10-15', 'Jackson', 'NJ'
+        );
+        const trevin = await users.createUser(
+            'Trevin', 'Rieger', 'srieger', 'callOfDuty0!',
+            'srieger@shu.edu', '2003-08-23', 'Jackson', 'NJ'
+        );
+        const emily = await users.createUser(
+            'Emily', 'Smith', 'emilyS123', 'superSafe1!',
+            'emily.smith@gmail.com', '1998-07-15', 'Boston', 'MA'
+        );
+        const matt = await users.createUser(
+            'Matt', 'Johnson', 'mattJ321', 'passWord1234!',
+            'matt.j@gmail.com', '1995-01-10', 'Dallas', 'TX'
         );
         console.log('Standard users seeded successfully.');
 
@@ -120,6 +174,7 @@ const main = async () => {
         await gyms.addReview(planetFitness._id, vincent.userId, 3, 'Good equipment, but too crowded.');
         await gyms.addReview(crunchFitness._id, emily.userId, 2, 'Needs better hygiene in locker rooms.');
         console.log('Reviews added successfully.');
+
     } catch (error) {
         console.error('Error during database seeding:', error);
     } finally {

@@ -12,7 +12,7 @@ const duplicateGymCheck = async (userId) => {
 }
 
 // Create gym
-export const createGym = async (name, userId, password, email, address, hours, role) => {
+export const createGym = async (name, userId, password, email, address, hours) => {
     // Server-side validation
     name = validation.checkString(name);
     userId = validation.checkUser(userId);
@@ -40,7 +40,6 @@ export const createGym = async (name, userId, password, email, address, hours, r
         email,
         address,
         hours,
-        role,
         equipment,
         classes,
         trainers,
@@ -49,6 +48,7 @@ export const createGym = async (name, userId, password, email, address, hours, r
         reviews,
         rating,
         comments,
+        role: 'gym'
     };
 
     const gymsCollection = await gyms();
@@ -98,7 +98,7 @@ export const getGymById = async (id) => {
 // Update gym content
 export const updateGym = async (id, gymObject) => {
     id = validation.checkId(id);
-    if (!await this.getGymById(id))
+    if (!await getGymById(id))
         throw `Gym with ${id} not found`
     let fields = ["name", "userId", "password", "email", "address", "hours", "equipment", "classes", "extra", "link"];
     Object.keys(gymObject).forEach((field) => {
