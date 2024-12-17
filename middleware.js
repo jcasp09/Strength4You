@@ -77,4 +77,10 @@ export const applyMiddleware = (app) => {
       req.method = "PATCH"
     next();
   })
+
+  app.use('/gyms/update/:id', (req, res, next) => {
+    if (req.method === "POST")
+      req.method = "PATCH"
+    next();
+  })
 };

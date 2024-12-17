@@ -10,7 +10,7 @@ router.route('/user').get(async (req, res) => {
 });
 
 router.route('/gym').get(async (req, res) => {
-    return res.status(200).render('gymprofile');
+    return res.status(200).render('gymprofile', {...req.session.user});
 });
 
 router.route('/gym/:id').get(async (req, res) => {

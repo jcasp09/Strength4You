@@ -28,8 +28,7 @@ export const createGym = async (name, userId, password, email, address, hours) =
         link = "",
         reviews = [],
         rating = 0,
-        comments = [],
-        trainers = [];
+        comments = [];
 
     password = await bcrypt.hash(password, saltRounds);
 
@@ -42,7 +41,6 @@ export const createGym = async (name, userId, password, email, address, hours) =
         hours,
         equipment,
         classes,
-        trainers,
         extra,
         link,
         reviews,

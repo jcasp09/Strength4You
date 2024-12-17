@@ -1,0 +1,124 @@
+<title>User Profile</title>
+
+<main class="userProfile">
+    <a href="/home">Go Back to Home</a>
+    <h1>Gym Profile</h1>
+    <form action="/gyms/update/{{_id}}" method="POST" id="updateUser">
+        <label for="inputFields">Change Profile</label>
+        <div class="inputFields">
+            <!-- name -->
+            <div class="field-row">
+                <label for="name" class="label">Gym Name</label>
+                <button type="button" class="edit-btn" data-target="name">Edit</button>
+                <input type="text" name="firstName" id="firstName" placeholder="{{firstName}}" disabled>
+            </div>
+
+            <!-- User ID -->
+            <div class="field-row">
+                <label for="userId" class="label">User ID</label>
+                <button type="button" class="edit-btn" data-target="userId">Edit</button>
+                <input type="text" name="userId" id="userId" placeholder="{{userId}}" disabled>
+            </div>
+
+            <!-- Password -->
+            <div class="field-row">
+                <label for="oldPassword" class="label">Old Password</label>
+                <button type="button" class="edit-btn" data-target="oldPassword">Edit</button>
+                <input type="password" name="oldPassword" id="oldPassword" disabled>
+            </div>
+            <div class="field-row">
+                <label for="password" class="label">New Password</label>
+                <button type="button" class="edit-btn" data-target="password">Edit</button>
+                <input type="password" name="password" id="password" disabled>
+            </div>
+
+            <!-- Email -->
+            <div class="field-row">
+                <label for="email" class="label">Email</label>
+                <button type="button" class="edit-btn" data-target="email">Edit</button>
+                <input type="text" name="email" id="email" placeholder="{{email}}" disabled>
+            </div>
+
+            <!-- Address -->
+            <div class="field-row">
+                <label for="address" class="label">Address</label>
+                <button type="button" class="edit-btn" data-target="address">Edit</button>
+                <input type="text" name="address" id="address" placeholder="{{address}}" disabled>
+            </div>
+
+            <div class="field-row">
+                <label for="hours" class="label">Hours</label>
+                <button type="button" class="edit-btn" data-target="hours">Edit</button>
+                <fieldset id="hoursFields">
+                <legend>Enter Operating Hours</legend>
+                <p>Example: '8am-10pm' (hh[a/p]m-hh[a/p]m)</p>
+
+                <div>
+                    <label for="monday">Monday:</label>
+                    <input type="text" id="monday" name="monday" placeholder="{{Hours.Mon}}" disabled>
+                    <p class="error" id="monError" hidden></p>
+                </div>
+                <div>
+                    <label for="tuesday">Tuesday:</label>
+                    <input type="text" id="tuesday" name="tuesday" placeholder="{{Hours.Tue}}" disabled>
+                    <p class="error" id="tueError" hidden></p>
+                </div>
+                <div>
+                    <label for="wednesday">Wednesday:</label>
+                    <input type="text" id="wednesday" name="wednesday" placeholder="{{Hours.Wed}}" disabled>
+                    <p class="error" id="wedError" hidden></p>
+                </div>
+                <div>
+                    <label for="thursday">Thursday:</label>
+                    <input type="text" id="thursday" name="thursday" placeholder="{{Hours.Thu}}" disabled>
+                    <p class="error" id="thuError" hidden></p>
+                </div>
+                <div>
+                    <label for="friday">Friday:</label>
+                    <input type="text" id="friday" name="friday" placeholder="{{Hours.Fri}}" disabled>
+                    <p class="error" id="friError" hidden></p>
+                </div>
+                <div>
+                    <label for="saturday">Saturday:</label>
+                    <input type="text" id="saturday" name="saturday" placeholder="{{Hours.Sat}}" disabled>
+                    <p class="error" id="satError" hidden></p>
+                </div>
+                <div>
+                    <label for="sunday">Sunday:</label>
+                    <input type="text" id="sunday" name="sunday" placeholder="{{Hours.Sub}}" disabled>
+                    <p class="error" id="sunError" hidden></p>
+                </div>
+            </fieldset>
+                {{!-- <div class="field-row">
+                    <label for="equipment" class="label">Equipment</label>
+                    <button type="button" id="addEquipment">+</button>
+                    <button type="button" id="subEquipment">-</button>
+                    <div id="equipment-area">
+                        {{#each equipment}}
+                            <div class="equipment-entry">
+                                <input type="text" id="type" value="{{type}}">
+                                <input type="number" id="count" value="{{count}}">
+                            </div>
+                        {{/each}}
+                    </div>
+                </div>
+                <div class="field-row">
+                    <label for="classes" class="label">Classes</label>
+                    <button type="button" id="addClass">+</button>
+                    <button type="button" id="subClass">-</button>
+                    <div id="class-area">
+                        {{#each classes}}
+                            <div class="class-entry">
+                                <input type="text" id="name" value="{{name}}">
+                                <input type="text" id="description" value="{{decription}}">
+                            </div>
+                        {{/each}}
+                    </div>
+                </div> --}}
+            </div>
+        </div>
+
+        <!-- Save Changes Button -->
+        <button type="submit">Save Changes</button>
+    </form>
+</main>

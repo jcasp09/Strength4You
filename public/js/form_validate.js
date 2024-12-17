@@ -472,17 +472,64 @@ $('.edit-btn').on('click', function (event) {
     if (targetInput.prop('disabled')) {
         if (targetId === "dob")
             targetInput.attr("type", "date")
+        if (targetId === "hours") {
+            $('#hoursFields input').each(function () {
+                $(this).prop('disabled', false);
+            });
+        }
         targetInput.prop('disabled', false).focus();
         $(this).text('Reset');
     } else {
         if (targetId === "dob")
             targetInput.attr("type", "text")
+        if (targetId === "hours") {
+            $('#hoursFields input').each(function () {
+                $(this).prop('disabled', true);
+            });
+        }
         targetInput.prop('disabled', true);
         targetInput.val('')
         $(this).text('Edit');
     }
 });
 
+$('#addEquipment').on('click', function () {
+    // Create a new div containing the input fields
+    const newEquipment = `
+        <div class="equipment-entry">
+            <input type="text" name="type" placeholder="Type" value="">
+            <input type="number" name="count" placeholder="Count" value="1">
+        </div>
+    `;
+
+    // Append the new div to the equipment area
+    $('#equipment-area').append(newEquipment);
+});
+
+// Function to remove the last equipment div
+$('#subEquipment').on('click', function () {
+    // Remove the last .equipment-entry in the equipment area
+    $('#equipment-area .equipment-entry').last().remove();
+});
+
+$('#addClass').on('click', function () {
+    // Create a new div containing the input fields
+    const newEquipment = `
+        <div class="class-entry">
+            <input type="text" name="name">
+            <input type="text" name="description">
+        </div>
+    `;
+
+    // Append the new div to the equipment area
+    $('#class-area').append(newEquipment);
+});
+
+// Function to remove the last equipment div
+$('#subClass').on('click', function () {
+    // Remove the last .equipment-entry in the equipment area
+    $('#class-area .class-entry').last().remove();
+});
 
 // Event Handler: Gym Search Form, validate fields and search
 $('#gymSearchForm').submit(function (event) {

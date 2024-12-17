@@ -89,18 +89,13 @@ router.get('/:id', async (req, res) => {
 });
 
 // Update a gym profile using objectId
-router.patch('/:id', async (req, res) => {
+router.patch('update/:id', async (req, res) => {
   const { id } = req.params; 
   const { name, email, address, hours } = req.body;
 
   try {
     const validatedId = validation.checkId(id, 'Gym ID');
     const updatedFields = {};
-
-    if (name) updatedFields.name = validation.checkString(name, 'Gym Name');
-    if (email) updatedFields.email = validation.checkEmail(email);
-    if (address) updatedFields.address = validation.checkString(address, 'Gym Address');
-    if (hours) updatedFields.hours = validation.checkHours(hours);
 
     if (Object.keys(updatedFields).length === 0) throw 'No valid fields to update'; 
 
