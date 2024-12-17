@@ -44,27 +44,17 @@ export const applyMiddleware = (app) => {
   // MW5: Profile Redirect
   app.use('/profile', (req, res, next) => {
     if (!req.session.user) {
-        return res.redirect('/home'); // Non-authenticated users redirected to home
+        return res.redirect('/home');
     }
     const role = req.session.user.role;
-    
-    // Allow gym users to access their own profile
-    if (role === 'gym' && req.originalUrl === "/profile/gym") {
+    if (role === 'user' && req.originalUrl !== "/profile/user") {
+        return res.redirect('/profile/user');
+    } else if (role === 'gym' && req.originalUrl !== "/profile/gym") {
         return res.redirect('/profile/gym');
     }
-
-    // Allow users to access other gym info (e.g., /profile/gym/:id)
-    if (role === 'user' && req.originalUrl === "/profile/user") {
-        return res.redirect('/profile/user');
-    }
-    
-    // Do not redirect if accessing /profile/gym/:id
-    if (/^\/profile\/gym\/[a-fA-F0-9]{24}$/.test(req.originalUrl)) {
-        return next();
-    }
-
     next();
 });
+
 
 
 
