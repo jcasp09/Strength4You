@@ -1,81 +1,38 @@
-<!-- Sign in page (serves Gyms only, userId and password are only required fields -->
+<!-- Sign in page (serves Gyms only, userId and password are only required fields) -->
 
 <title>Sign In - Gym</title>
 
-<main class="signin-background" style="
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background: url('/public/images/gymBackground.jpg') no-repeat center center;
-    background-size: cover;
-    color: #333;
-    font-family: Arial, sans-serif;
-">
-    <div style="
-        background-color: rgba(255, 255, 255, 0.95);
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        padding: 30px 40px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        max-width: 400px;
-        width: 100%;
-        text-align: center;
-    ">
-        <h1 style="margin-bottom: 20px; color: #007BFF; font-size: 1.8rem;">Sign In - Gym</h1>
+<main class="signin-background">
+    <div class="signin-div">
+        <h1 class="signin-h1">Sign In - Gym</h1>
 
-        <form action="/gyms/signin" method="POST" id="signinGym">
-            <div class="inputFields" style="display: flex; flex-direction: column; gap: 15px;">
+        <form action="/gyms/signin" method="POST" id="signInGym">
+            <div class="signin-inputFields">
 
                 <!-- User ID -->
                 <div>
-                    <label for="userId" class="label" style="font-weight: bold; margin-bottom: 5px; display: block;">User ID</label>
-                    <input type="text" name="userId" id="userId" style="
-                        width: 100%;
-                        padding: 10px;
-                        border: 1px solid #ccc;
-                        border-radius: 5px;
-                        font-size: 1rem;">
+                    <label for="userId" class="signin-label">User ID</label>
+                    <input class="signin-input" type="text" name="userId" id="userId">
                 </div>
-                <div class="error" id="userIdError" hidden style="color: red; font-size: 0.9rem;"></div>
+                <div class="error" id="userIdError" hidden></div>
 
                 <!-- Password -->
                 <div>
-                    <label for="password" class="label" style="font-weight: bold; margin-bottom: 5px; display: block;">Password</label>
-                    <input type="password" name="password" id="password" style="
-                        width: 100%;
-                        padding: 10px;
-                        border: 1px solid #ccc;
-                        border-radius: 5px;
-                        font-size: 1rem;">
+                    <label for="password" class="signin-label">Password</label>
+                    <input class="signin-input" type="password" name="password" id="password">
                 </div>
-                <div class="error" id="passwordError" hidden style="color: red; font-size: 0.9rem;"></div>
+                <div class="error" id="passwordError" hidden></div>
             </div>
 
             <!-- Sign in button -->
-            <button type="submit" style="
-                margin-top: 20px;
-                padding: 10px;
-                background-color: #007BFF;
-                color: #fff;
-                border: none;
-                border-radius: 5px;
-                font-size: 1rem;
-                cursor: pointer;
-                transition: background-color 0.3s ease;
-                width: 100%;">
+            <button type="submit" class="signin-button">
                 Sign In
             </button>
         </form>
 
         <!-- Back to Home link -->
-        <div style="margin-top: 15px;">
-            <a href="/home" style="
-                color: #007BFF;
-                text-decoration: none;
-                font-size: 1rem;">
-                Back to Home
-            </a>
+        <div>
+            <a href="/home">Back to Home</a>
         </div>
     </div>
 </main>
