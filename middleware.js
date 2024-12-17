@@ -44,23 +44,16 @@ export const applyMiddleware = (app) => {
   // MW5: Profile Redirect
   app.use('/profile', (req, res, next) => {
     if (!req.session.user) {
-        return res.redirect('/home'); // Redirect if not authenticated
+        return res.redirect('/home');
     }
-
     const role = req.session.user.role;
-
-    if (req.originalUrl === '/profile') { // Redirect ONLY if the path is /profile
-        if (role === 'user') {
-            return res.redirect('/profile/user');
-        } else if (role === 'gym') {
-            return res.redirect('/profile/gym');
-        }
+    if (role === 'user' && req.originalUrl !== "/profile/user") {
+        return res.redirect('/profile/user');
+    } else if (role === 'gym' && req.originalUrl !== "/profile/gym") {
+        return res.redirect('/profile/gym');
     }
-
-    next(); // Allow all other routes to proceed
+    next();
 });
-
-
 
 
 
